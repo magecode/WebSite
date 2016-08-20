@@ -92,11 +92,25 @@
 			//locate drawing position
 			var map=new google.maps.Map(document.getElementById("googleMap"),mapProp);
 	
-			//initialise marker
+			//initialise icon based on different environment level
+			var face = "../images/icons/happy.png";
+			
+			
+			/*this part is left for implement later
+			if (crimnal report higher than xxx){
+				face = "../images/icons/sad.png";
+			}else{
+				if (criminal report less th	an xxx){
+					face = "../images/icons/happy.png";
+				}else{
+					face = "../images/icons/middle.png"
+				}
+			}
+			*/
 			var marker=new google.maps.Marker({
 				position:myCenter,
 				animation: google.maps.Animation.BOUNCE,
-				icon: 'assets/images/icons/happy.png'
+				icon: face
 			});
 		
 			//drawing suburbs boundaries in victoria and highlight target suburb
@@ -114,7 +128,7 @@
 					fillOpacity: 0.5
 					}
 				},{
-					where: "'Suburb Name' =" + "'" + targetLoc + "'",
+					where: "'Suburb Name' CONTAINS IGNORING CASE " + "'" + targetLoc + "'",
 					polygonOptions: {
 						strokeColor: '#000000' ,
 						strokeOpacity: 0.8,
@@ -181,18 +195,24 @@
     </nav>
 </section>
 
-<section class="mbr-footer mbr-section mbr-section-md-padding mbr-parallax-background" id="contacts3-14" style="background-image: url(./images/jumbotron.jpg); padding-top: 120px; padding-bottom: 15%;">
+<section class="mbr-footer mbr-section mbr-section-md-padding mbr-parallax-background" id="contacts3-14" style="background-image: url(../images/jumbotron.jpg); padding-top: 120px; padding-bottom: 15%;">
 	<div class="row">
     <div class="mbr-overlay" style="opacity: 0.8; background-color: rgb(60, 60, 60);"></div>		
 	<div id="googleMap" style="width:800px;height:600px;float:left;margin-right: 300px"></div>		
 	<div id="details" style="float:left">
 		<!--connect to DB and retrieve data-->
 		<?php 
-			$servername = "118.139.53.199";
-			$username = "ian";
-			$password = "ian";
-			$dbname = "envrionment";
-
+			$servername = "localhost";
+			$username = "root";
+			$password = "";
+			$dbname = "ngdb";
+			
+			//Using GET
+			$var_value = $_GET['suburb'];
+			if ($var_value == ""){
+				$var_value = "Melbourne";
+			}
+ 
 			// Create connection
 			$conn = new mysqli($servername, $username, $password, $dbname);
 			// Check connection
@@ -200,18 +220,36 @@
 				 die("Connection failed: " . $conn->connect_error);
 			} 
 
-			$sql = "SELECT * FROM CR";
+			//get postcode
+			$sql = "SELECT * FROM melbmap where suburb = UPPER('$var_value')";
 			$result = $conn->query($sql);
 
 			if ($result->num_rows > 0) {
 				 // output data of each row
 				 while($row = $result->fetch_assoc()) {
-					 echo  "<br> id: ". $row["a"]. " - Name: ". $row["b"]. " <br>";
+					 $postcode = $row["postcode"] ;
+					 //echo  $postcode;
 				 }
 			} else {
 				 echo "0 results";
 			}
-
+			
+			//get criminal report
+			//there has multiple figure with the same postcode, need find a way to deal with it
+			$sql = "SELECT * FROM crimemap where postcode = '$postcode' and year = 2015";
+			$result = $conn->query($sql);
+			if ($result->num_rows > 0) {
+				 // output data of each row
+				 while($row = $result->fetch_assoc()) {
+					 $crReport = $row["report"];
+					 echo  $crReport;
+				 }
+			} else {
+				 echo "0 results";
+			}
+			
+			
+			
 			$conn->close();
 		?>
 		</div>		
