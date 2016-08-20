@@ -61,6 +61,24 @@
 			
 			//retrieve geographic parameters from google api
 			var targetLoc = loc;
+			var tempArray = targetLoc.split(" ");
+			
+			//make input first letter upper case
+			if (tempArray.length == 1)
+				targetLoc = capitalizeFirstLetter(targetLoc);
+			else{
+				var temp = "";
+				for (var i = 0; i < tempArray.length; i++){
+					tempArray[i] = capitalizeFirstLetter(tempArray[i]);
+					
+				}
+				
+				for (var i = 0; i < tempArray.length; i++){
+					temp += tempArray[i] + " ";
+				}
+				targetLoc = temp.trim();
+			}
+
 			var geocoder = new google.maps.Geocoder();
 			geocoder.geocode({'address': targetLoc + ".vic"}, function(results, status) {
 				if (status === google.maps.GeocoderStatus.OK) {
@@ -128,7 +146,7 @@
 					fillOpacity: 0.5
 					}
 				},{
-					where: "'Suburb Name' CONTAINS IGNORING CASE " + "'" + targetLoc + "'",
+					where: "'Suburb Name' =" + "'" + targetLoc + "'",
 					polygonOptions: {
 						strokeColor: '#000000' ,
 						strokeOpacity: 0.8,
@@ -154,6 +172,11 @@
 			infowindow.open(map,marker);
 		}
 	
+	
+		function capitalizeFirstLetter(string) {
+			return string.charAt(0).toUpperCase() + string.slice(1);
+		}
+		
 		//run function when load current page
 		google.maps.event.addDomListener(window, 'load', initialize);
 	</script>
