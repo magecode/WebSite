@@ -112,19 +112,23 @@
 	
 			//initialise icon based on different environment level
 			var face = "../images/icons/happy.png";
+			var eLv = "Lv2";
 			
-			
-			/*this part is left for implement later
-			if (crimnal report higher than xxx){
+    	    //this part is left for implement later
+			var eFigure = document.getElementById("eFigure").innerHTML;
+			if (eFigure > 5000) {
+			    eLv = "Lv1";
 				face = "../images/icons/sad.png";
 			}else{
-				if (criminal report less th	an xxx){
-					face = "../images/icons/happy.png";
-				}else{
+			    if (eFigure < 2000) {
+			        eLv = "Lv3";;
+			        face = "../images/icons/happy.png";
+			    } else {
+			        eLv = "Lv2";
 					face = "../images/icons/middle.png"
 				}
 			}
-			*/
+			
 			var marker=new google.maps.Marker({
 				position:myCenter,
 				animation: google.maps.Animation.BOUNCE,
@@ -163,10 +167,11 @@
 			//draw marker
 			marker.setMap(map);
 		
-			//initialise infowindow for marker
+    	    //initialise infowindow for marker
 			var infowindow = new google.maps.InfoWindow({
-				content: '<div style="color:black">Lv. 5</div>'
+			    content: '<div style="color:black">' + eLv + '</div>'
 			});
+            
 
 			//draw infowindow
 			infowindow.open(map,marker);
@@ -220,62 +225,60 @@
 
 <section class="mbr-footer mbr-section mbr-section-md-padding mbr-parallax-background" id="contacts3-14" style="background-image: url(../images/jumbotron.jpg); padding-top: 120px; padding-bottom: 15%;">
 	<div class="row">
-    <div class="mbr-overlay" style="opacity: 0.8; background-color: rgb(60, 60, 60);"></div>		
-	<div id="googleMap" style="width:800px;height:600px;float:left;margin-right: 300px"></div>		
-	<div id="details" style="float:left">
-		<!--connect to DB and retrieve data-->
-		<?php 
-			$servername = "localhost";
-			$username = "root";
-			$password = "";
-			$dbname = "ngdb";
-			
-			//Using GET
-			$var_value = $_GET['suburb'];
-			if ($var_value == ""){
-				$var_value = "Melbourne";
-			}
- 
-			// Create connection
-			$conn = new mysqli($servername, $username, $password, $dbname);
-			// Check connection
-			if ($conn -> connect_error) {
-				 die("Connection failed: " . $conn->connect_error);
-			} 
+    <div class="mbr-overlay" style="opacity: 0.5; background-color: rgb(60, 60, 60);"></div>		
+	<div id="googleMap" style="width:800px;height:600px;float:left;margin-right: 150px"></div>		
+        <div id="details" style="float:left; color:#FFFFFF;">
+            <h3>Below is the report crime happend in 2005:</h3>
+            <!--connect to DB and retrieve data-->
+            <p id="eFigure" style="color:#FFFFFF;">
+                <?php
+                $servername = "169.254.181.134";
+			    $username = "admin";
+			    $password = "admin";
+			    $dbname = "ngdb";
 
-			//get postcode
-			$sql = "SELECT * FROM melbmap where suburb = UPPER('$var_value')";
-			$result = $conn->query($sql);
+			    //Using GET
+			    $var_value = $_GET['suburb'];
+			    if ($var_value == ""){
+				    $var_value = "Melbourne";
+			    }
 
-			if ($result->num_rows > 0) {
-				 // output data of each row
-				 while($row = $result->fetch_assoc()) {
-					 $postcode = $row["postcode"] ;
-					 //echo  $postcode;
-				 }
-			} else {
-				 echo "0 results";
-			}
-			
-			//get criminal report
-			//there has multiple figure with the same postcode, need find a way to deal with it
-			$sql = "SELECT * FROM crimemap where postcode = '$postcode' and year = 2015";
-			$result = $conn->query($sql);
-			if ($result->num_rows > 0) {
-				 // output data of each row
-				 while($row = $result->fetch_assoc()) {
-					 $crReport = $row["report"];
-					 echo  $crReport;
-				 }
-			} else {
-				 echo "0 results";
-			}
-			
-			
-			
-			$conn->close();
-		?>
-		</div>		
+			    // Create connection
+			    $conn = new mysqli($servername, $username, $password, $dbname);
+			    // Check connection
+			    if ($conn -> connect_error) {
+				     die("Connection failed: " . $conn->connect_error);
+			    }
+
+
+			    //generate crime report         
+			    $sql = "SELECT * FROM melbmap where suburb = UPPER('$var_value')";
+			    $result = $conn->query($sql);
+
+			    if ($result->num_rows > 0) {
+				     //output data of each row
+				     while($row = $result->fetch_assoc()) {
+					     $postcode = $row["postcode"];
+                         $sql = "SELECT * FROM crimemap where postcode = '$postcode' and year = 2015";
+                         $result = $conn->query($sql);
+                         if ($result->num_rows > 0) {
+                             // output data of each row
+                             while($row = $result->fetch_assoc()) {
+                                 $crReport = $row["report"];
+                                 echo  $crReport;
+                             }
+                         } else {
+                             echo "0";
+                         }
+				     }
+			    } else {
+				     echo "0";
+			    }
+
+			    $conn->close();
+                ?>
+            </p>
+        </div>		
 </section>
 
 <section>
