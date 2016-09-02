@@ -34,29 +34,25 @@
 
     		//filter and initialise parameters
 			//the input is frozen to one feature for now, need to be changed in future to fit multiple feature input
-    		if (parameters.length < 2) {
-    			alert("you need at least choose one environment feature.");
-    			loc = "Melbourne";
-    		} else {
-				loc = parameters[0].replace("suburb=", "").replace("+", " ");
-    			if (loc != "") {   				
-    				if (parameters[1].trim() != "") {
-    					//retrieve envrionment features
-    					//only one feature for now, build in next iteration
-    					if (parameters[1].trim != "") {
-    						//retrieve rate
-    						//leave for now
-    					}
-    					else {
-							//leave for now
-    					}
-    				} else {
+			loc = parameters[0].replace("suburb=", "").replace("+", " ");
+    		if (loc != "") {   				
+    			if (parameters[1].trim() != "") {
+    				//retrieve envrionment features
+    				//only one feature for now, build in next iteration
+    				if (parameters[1].trim != "") {
+    					//retrieve rate
     					//leave for now
     				}
+    				else {
+						//leave for now
+    				}
     			} else {
-    				loc = "Melbourne";
+    				//leave for now
     			}
+    		} else {
+    			loc = "Melbourne";
     		}
+    		
     		
 			
 			//retrieve geographic parameters from google api
@@ -84,9 +80,19 @@
 				if (status === google.maps.GeocoderStatus.OK) {
 					var lat = results[0].geometry.location.lat();
 					var lng = results[0].geometry.location.lng();
-				  initMap(lat, lng, targetLoc);
+					var strictBounds = new google.maps.LatLngBounds(
+                            new google.maps.LatLng(-38.073926, 144.359598),
+                            new google.maps.LatLng(-37.620642, 145.612040)
+                        );
+					var targetCenter = new google.maps.LatLng(lat, lng);
+					if (strictBounds.contains(targetCenter)) {
+					    initMap(lat, lng, targetLoc);
+					} else {
+					    alert("Please only input location within Melbourne.");
+					}
 				} else {
-				  document.getElementById("googleMap").innerhtml = "Geocode was not successful for the following reason:";
+				    alert("Please check your input, it should be either a suburb name or a post code.");
+				  //document.getElementById("googleMap").innerhtml = "Geocode was not successful for the following reason:";
 				}			
 			});
 		
@@ -137,6 +143,7 @@
 		
 			//drawing suburbs boundaries in victoria and highlight target suburb
 			var layer = new google.maps.FusionTablesLayer({
+			    suppressInfoWindows: true,
 				query: {
 				  select: 'geometry',
 				  from: '1eP2GkW0yhBY7r9uZG_LKiV6E7iFqTZgG256sNg6Q'
@@ -146,8 +153,8 @@
 					strokeColor: '#000000' ,
 					strokeOpacity: 0.8,
 					strokeWeight: 2,
-					fillColor: '#FFFFFF',
-					fillOpacity: 0.5
+					fillColor: '#000000',
+					fillOpacity: 0.4
 					}
 				},{
 					where: "'Suburb Name' =" + "'" + targetLoc + "'",
@@ -155,8 +162,8 @@
 						strokeColor: '#000000' ,
 						strokeOpacity: 0.8,
 						strokeWeight: 2,
-						fillColor: '#008000',
-						fillOpacity: 0.15
+						fillColor: '#000000',
+						fillOpacity: 0.1
 					}
 				}]
 			});
@@ -226,16 +233,22 @@
 <section class="mbr-footer mbr-section mbr-section-md-padding mbr-parallax-background" id="contacts3-14" style="background-image: url(../images/jumbotron.jpg); padding-top: 120px; padding-bottom: 15%;">
 	<div class="row">
     <div class="mbr-overlay" style="opacity: 0.5; background-color: rgb(60, 60, 60);"></div>		
-	<div id="googleMap" style="width:800px;height:600px;float:left;margin-right: 150px"></div>		
+	<div id="googleMap" style="width:800px;height:600px;float:left;margin-right: 150px">
+    </div>		
         <div id="details" style="float:left; color:#FFFFFF;">
             <h3>Below is the report crime happend in 2005:</h3>
             <!--connect to DB and retrieve data-->
             <p id="eFigure" style="color:#FFFFFF;">
                 <?php
-                $servername = "169.254.181.134";
-			    $username = "admin";
-			    $password = "admin";
-			    $dbname = "ngdb";
+                //read DB deatail from file
+                $db_temp = file_get_contents("../info/dbInfo.txt");
+                $db_info = explode(";",$db_temp);
+                $servername = $db_info[0];
+                $username = $db_info[1];
+                $password = $db_info[2];
+                $dbname = $db_info[3];
+
+
 
 			    //Using GET
 			    $var_value = $_GET['suburb'];
@@ -251,7 +264,7 @@
 			    }
 
 
-			    //generate crime report         
+			    //generate crime report
 			    $sql = "SELECT * FROM melbmap where suburb = UPPER('$var_value')";
 			    $result = $conn->query($sql);
 

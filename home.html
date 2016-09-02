@@ -21,6 +21,9 @@
 	<link rel="stylesheet" href="assets/dropdown/css/style.css">
 	<link rel="stylesheet" href="assets/theme/css/style.css">
 	<link rel="stylesheet" href="assets/mobirise/css/mbr-additional.css" type="text/css">
+
+    <script type="text/javascript" src="http://maps.googleapis.com/maps/api/js?key=AIzaSyCcvtV_71ZGFAUUcS9_u_D1ZFHi2BWLjao&libraries=places&sensor=false"></script>
+    <script type="text/javascript" src="assets/JS/validation.js"></script>
 	  
 	<style>
 	  video { 
@@ -38,7 +41,7 @@
 	}
 	</style>
   
-	<script type="text/javascript" src="http://maps.googleapis.com/maps/api/js?libraries=places&sensor=false"></script>
+
 	<script>
         //this function is used for auto fullfill search box
 		//still in work
@@ -69,7 +72,7 @@
                         <button class="navbar-toggler pull-xs-right hidden-md-up" type="button" data-toggle="collapse" data-target="#exCollapsingNavbar">
                             <div class="hamburger-icon"></div>
                         </button>
-                        <ul class="nav-dropdown collapse pull-xs-right nav navbar-nav navbar-toggleable-sm" id="exCollapsingNavbar"><li class="nav-item dropdown"><a class="nav-link link" href="home.html">HOME</a></li><li class="nav-item"><a class="nav-link link" href="suburb.html">SHARE</a></li><li class="nav-item"><a class="nav-link link" href="about.html">ABOUT</a></li></ul>
+                        <ul class="nav-dropdown collapse pull-xs-right nav navbar-nav navbar-toggleable-sm" id="exCollapsingNavbar"><li class="nav-item dropdown"><a class="nav-link link" href="home.html">HOME</a></li><li class="nav-item"><a class="nav-link link" href="suburb.html">SHARE</a></li><li class="nav-item"><a class="nav-link link" href="temp.html">ABOUT</a></li></ul>
                         <button hidden="" class="navbar-toggler navbar-close" type="button" data-toggle="collapse" data-target="#exCollapsingNavbar">
                             <div class="close-icon"></div>
                         </button>
@@ -94,14 +97,14 @@
 					        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 					        <i style='color:white;'>Have any target location? (e.g. campus you study in)</i><br>
 					        </div>
-						    <form action="/assets/php/result.php" method="get">
-							    <input type="text" size="60" name="suburb" id="loc" placeholder="Melbourne (please input suburb name)">
+						    <form name="input" action="/assets/php/result.php" method="get" onsubmit="return validateForm(this)">
+							    <input type="text" size="60" name="suburb" placeholder="Melbourne (please input suburb name)">
 							    <input type="submit" id="sub" value="try me!">
 						        <div align="left">
 						            <br>
 						            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 						            <!-- only one feature for now, frozen the checkbox -->
-									<input type='checkbox' id='eFeature' name='eFeature' disabled='disabled' checked='checked'/>
+									<input type='checkbox' name='eFeature'/>
 						            <label for='eFeature'><span style='color:white;'>Criminal Rate</span></label>
 						            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 						            <select id="rate" name="myRate">
