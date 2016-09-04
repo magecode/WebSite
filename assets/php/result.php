@@ -33,33 +33,16 @@
     		var parameters = query.split("&");
 
     		//filter and initialise parameters
-			//the input is frozen to one feature for now, need to be changed in future to fit multiple feature input
-			loc = parameters[0].replace("suburb=", "").replace("+", " ");
-    		if (loc != "") {   				
-    			if (parameters[1].trim() != "") {
-    				//retrieve envrionment features
-    				//only one feature for now, build in next iteration
-    				if (parameters[1].trim != "") {
-    					//retrieve rate
-    					//leave for now
-    				}
-    				else {
-						//leave for now
-    				}
-    			} else {
-    				//leave for now
-    			}
-    		} else {
-    			loc = "Melbourne";
-    		}
-    		
+    		loc = parameters[0].replace("suburb=", "").replace("+", " ");
+    		//loc = loc.split('%2C')[0].replace("+", " ");
     		
 			
 			//retrieve geographic parameters from google api
 			var targetLoc = loc;
 			var tempArray = targetLoc.split(" ");
 			
-			//make input first letter upper case
+    	    //make input first letter upper case
+            /*
 			if (tempArray.length == 1)
 				targetLoc = capitalizeFirstLetter(targetLoc);
 			else{
@@ -73,20 +56,45 @@
 					temp += tempArray[i] + " ";
 				}
 				targetLoc = temp.trim();
-			}
+			}*/
 
 			var geocoder = new google.maps.Geocoder();
-			geocoder.geocode({'address': targetLoc + ".vic"}, function(results, status) {
+			geocoder.geocode({'address': loc}, function(results, status) {
 				if (status === google.maps.GeocoderStatus.OK) {
 					var lat = results[0].geometry.location.lat();
 					var lng = results[0].geometry.location.lng();
+
+					//get suburb name 
+					var loc_info = results[0].address_components;
+					var flag_hasSuburb = false;
+					for (i = 0; i < loc_info.length; i++) {
+					    if (loc_info[i].types.indexOf('locality') !== -1) {
+					        targetLoc = loc_info[i].long_name;
+					        flag_hasSuburb = true;
+					    }
+					}
+
+				    //show alert info when cannot find suburb
+					if (flag_hasSuburb == false) {
+					    alert("Sorry, we cannot locate to a suitable suburb.");
+					}
+
 					var strictBounds = new google.maps.LatLngBounds(
-                            new google.maps.LatLng(-38.073926, 144.359598),
-                            new google.maps.LatLng(-37.620642, 145.612040)
+                            new google.maps.LatLng(-38.310532, 144.081150),
+                            new google.maps.LatLng(-37.417193, 146.157566)
                         );
 					var targetCenter = new google.maps.LatLng(lat, lng);
 					if (strictBounds.contains(targetCenter)) {
-					    initMap(lat, lng, targetLoc);
+					    var geocoder = new google.maps.Geocoder();
+					    geocoder.geocode({ 'address': targetLoc + ', Victoria, Australia' }, function (results, status) {
+					        if (status === google.maps.GeocoderStatus.OK) {
+					            var lat = results[0].geometry.location.lat();
+					            var lng = results[0].geometry.location.lng();
+					            initMap(lat,lng,targetLoc);
+					        } else {
+					            document.getElementById("googleMap").innerhtml = "Geocode was not successful for the following reason:";
+					        }
+					    });
 					} else {
 					    alert("Please only input location within Melbourne.");
 					}
@@ -99,7 +107,9 @@
 		}
 	
 		//this function is used for drawing a result map
-    	function initMap(lat, lng, targetLoc) {
+    	function initMap(lat,lng,targetLoc) {
+
+
 			//locate the map center to target suburb's center
 			var myCenter=new google.maps.LatLng(lat, lng);
 			var mapProp = {
@@ -117,10 +127,13 @@
 			var map=new google.maps.Map(document.getElementById("googleMap"),mapProp);
 	
 			//initialise icon based on different environment level
+            /*
 			var face = "../images/icons/happy.png";
 			var eLv = "Lv2";
+            */
 			
     	    //this part is left for implement later
+            /*
 			var eFigure = document.getElementById("eFigure").innerHTML;
 			if (eFigure > 5000) {
 			    eLv = "Lv1";
@@ -134,12 +147,13 @@
 					face = "../images/icons/middle.png"
 				}
 			}
+            */
 			
-			var marker=new google.maps.Marker({
+			/*var marker=new google.maps.Marker({
 				position:myCenter,
 				animation: google.maps.Animation.BOUNCE,
 				icon: face
-			});
+			});*/
 		
 			//drawing suburbs boundaries in victoria and highlight target suburb
 			var layer = new google.maps.FusionTablesLayer({
@@ -239,7 +253,9 @@
             <h3>Below is the report crime happend in 2005:</h3>
             <!--connect to DB and retrieve data-->
             <p id="eFigure" style="color:#FFFFFF;">
+                
                 <?php
+                /*
                 //read DB deatail from file
                 $db_temp = file_get_contents("../info/dbInfo.txt");
                 $db_info = explode(";",$db_temp);
@@ -288,7 +304,7 @@
 				     echo "0";
 			    }
 
-			    $conn->close();
+			    $conn->close();*/
                 ?>
             </p>
         </div>		
