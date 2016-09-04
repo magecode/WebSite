@@ -20,9 +20,23 @@
 	<link rel="stylesheet" href="../theme/css/style.css">
 	<link rel="stylesheet" href="../mobirise/css/mbr-additional.css" type="text/css">
 	
-	<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCcvtV_71ZGFAUUcS9_u_D1ZFHi2BWLjao"></script>
+    <style>
+        .gm-style .gm-style-iw {
+            font-size: 16px;
+            font-weight: bold;
+            color:black;
+            font-family: sans-serif;
+            text-transform: uppercase;
+        }
+    </style>
+
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCcvtV_71ZGFAUUcS9_u_D1ZFHi2BWLjao&libraries=places"></script>
 	
 	<script>	
+        var map;
+        var infowindow;
+        var facilities = [];
+
     	//this function is used for receive data pass from home.html and get geographical parameters of target suburb
     	function initialize() {
     		var loc = "";
@@ -34,29 +48,20 @@
 
     		//filter and initialise parameters
     		loc = parameters[0].replace("suburb=", "").replace("+", " ");
-    		//loc = loc.split('%2C')[0].replace("+", " ");
     		
+    	    //get facilities parameters
+    		var count = 0;
+    		for (i = 0; i < parameters.length; i++) {
+    		    if (parameters[i].indexOf("facilities") !== -1) {
+    		        //alert (parameters[i]);
+    		        facilities[count] = parameters[i].replace("facilities=", "");
+    		        count++;
+    		    }
+    		}
 			
 			//retrieve geographic parameters from google api
 			var targetLoc = loc;
 			var tempArray = targetLoc.split(" ");
-			
-    	    //make input first letter upper case
-            /*
-			if (tempArray.length == 1)
-				targetLoc = capitalizeFirstLetter(targetLoc);
-			else{
-				var temp = "";
-				for (var i = 0; i < tempArray.length; i++){
-					tempArray[i] = capitalizeFirstLetter(tempArray[i]);
-					
-				}
-				
-				for (var i = 0; i < tempArray.length; i++){
-					temp += tempArray[i] + " ";
-				}
-				targetLoc = temp.trim();
-			}*/
 
 			var geocoder = new google.maps.Geocoder();
 			geocoder.geocode({'address': loc}, function(results, status) {
@@ -108,8 +113,6 @@
 	
 		//this function is used for drawing a result map
     	function initMap(lat,lng,targetLoc) {
-
-
 			//locate the map center to target suburb's center
 			var myCenter=new google.maps.LatLng(lat, lng);
 			var mapProp = {
@@ -122,39 +125,24 @@
 			clickable: false,
 			mapTypeId:google.maps.MapTypeId.HYBRID
 			};
+
 		
 			//locate drawing position
-			var map=new google.maps.Map(document.getElementById("googleMap"),mapProp);
+			map = new google.maps.Map(document.getElementById("googleMap"),mapProp);
 	
-			//initialise icon based on different environment level
-            /*
-			var face = "../images/icons/happy.png";
-			var eLv = "Lv2";
-            */
-			
-    	    //this part is left for implement later
-            /*
-			var eFigure = document.getElementById("eFigure").innerHTML;
-			if (eFigure > 5000) {
-			    eLv = "Lv1";
-				face = "../images/icons/sad.png";
-			}else{
-			    if (eFigure < 2000) {
-			        eLv = "Lv3";;
-			        face = "../images/icons/happy.png";
-			    } else {
-			        eLv = "Lv2";
-					face = "../images/icons/middle.png"
-				}
+			if (facilities.length !== 0) {
+			    infowindow = new google.maps.InfoWindow({
+			        content: '<div style="color:black">' + '</div>'
+			    });
+			    var service = new google.maps.places.PlacesService(map);
+			    service.nearbySearch({
+			        location: { lat: lat, lng: lng },
+			        radius: 1000,
+			        types: facilities
+			    }, callback);
 			}
-            */
 			
-			/*var marker=new google.maps.Marker({
-				position:myCenter,
-				animation: google.maps.Animation.BOUNCE,
-				icon: face
-			});*/
-		
+
 			//drawing suburbs boundaries in victoria and highlight target suburb
 			var layer = new google.maps.FusionTablesLayer({
 			    suppressInfoWindows: true,
@@ -186,18 +174,38 @@
 			layer.setMap(map);
 					
 			//draw marker
-			marker.setMap(map);
+			//marker.setMap(map);
 		
     	    //initialise infowindow for marker
-			var infowindow = new google.maps.InfoWindow({
+			/*var infowindow = new google.maps.InfoWindow({
 			    content: '<div style="color:black">' + eLv + '</div>'
 			});
             
 
 			//draw infowindow
-			infowindow.open(map,marker);
+			infowindow.open(map,marker);*/
 		}
 	
+    	function callback(results, status) {
+    	    if (status === google.maps.places.PlacesServiceStatus.OK) {
+    	        for (var i = 0; i < results.length; i++) {
+    	            createMarker(results[i]);
+    	        }
+    	    }
+    	}
+
+    	function createMarker(place) {
+    	    var placeLoc = place.geometry.location;
+    	    var marker = new google.maps.Marker({
+    	        map: map,
+    	        position: place.geometry.location
+    	    });
+
+    	    google.maps.event.addListener(marker, 'click', function () {
+    	        infowindow.setContent(place.name);
+    	        infowindow.open(map, this);
+    	    });
+        }
 	
 		function capitalizeFirstLetter(string) {
 			return string.charAt(0).toUpperCase() + string.slice(1);
