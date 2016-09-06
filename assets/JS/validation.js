@@ -1,15 +1,27 @@
 ﻿//validate user input suburb name and checkbox
-function validateForm(theForm) {
-    var x = document.forms["input"]["suburb"].value;
-    var y = theForm.eFeature.checked;
+var checkFlag = false;
 
-    if (x == null || x == "") {
+
+function validateForm(theForm) {
+    var input = document.forms["input"]["suburb"].value;
+    
+    if (input == null || input == "") {
         alert("suburb input must be filled out");
         return false;
     } else {
-        if (y == null || y == "") {
-            alert("checkbox must have at least one checked feature");
+        var checkCR = document.getElementById("CrimeRate");
+        var checkPD = document.getElementById("Population");
+        if (checkCR.checked || checkPD.checked) {
+            checkFlag = true;
+        }
+        if (checkFlag == false) {
+            alert("please choose at least one environment feature");
             return false;
         }
     }
+
+    
+   
+    
+
 }

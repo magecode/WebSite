@@ -23,7 +23,7 @@
 	<link rel="stylesheet" href="assets/mobirise/css/mbr-additional.css" type="text/css">
 
     <script type="text/javascript" src="http://maps.googleapis.com/maps/api/js?key=AIzaSyCcvtV_71ZGFAUUcS9_u_D1ZFHi2BWLjao&signed_in=true&libraries=places"></script>
-    <script type="text/javascript" src="assets/JS/validation.js"></script>
+    <script type="text/javascript" src="assets/js/validation.js"></script>
 	  
 	<style>
 	  video { 
@@ -103,26 +103,25 @@
 					        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 					        <i style='color:white;'>Have any target location? (e.g. campus you study in)</i><br>
 					        </div>
-						    <form name="input" action="/assets/php/result.php" method="get" onsubmit="return validateForm(this)">
+						    <form name="input" action="/assets/php/result.php" method="get" onsubmit="return validateForm(this);">
 							    <input type="text" size="60" name="suburb" id="suburb" placeholder="Melbourne (please input suburb name)" onfocus="autoCompleteSearch()">
 							    <input type="submit" id="sub" value="try me!">
 						        <div align="left">
 						            <br>
 						            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 						            <!-- only one feature for now, frozen the checkbox -->
-									<input type='checkbox' name='eFeature'/>
-						            <label for='eFeature'><span style='color:white;'>Criminal Rate</span></label>
-						            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-						            <select id="rate" name="myRate">
-							            <option value="1">1</option>
-							            <option value="2">2</option>
-							            <option value="3">3</option>
-							            <option value="4">4</option>
-						            </select>
+                                    <input type="checkbox" name="eFeatures[]" id="CrimeRate" value="CrimeRate"><i style='color:white;'>CrimeRate</i><br>
+                                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                    <input type="checkbox" name="eFeatures[]" id="Population" value="Population"><i style='color:white;'>Population Density</i><br>
+                                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 						        </div>
+
                                 <div align="left">
+                                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                                     <input type="checkbox" name="facilities" value="school"><i style='color:white;'>i want to see nearby schools</i><br>
+                                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                                     <input type="checkbox" name="facilities" value="park"><i style='color:white;'>i want to see nearby parks</i><br>
+                                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                                     <input type="checkbox" name="facilities" value="hospital"><i style='color:white;'> i want to see nearby hospitals</i><br>
                                 </div>
 						    </form>

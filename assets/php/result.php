@@ -1,346 +1,195 @@
-<!DOCTYPE html>
 <html>
-<head>
-	<meta charset="UTF-8">
-	<meta http-equiv="X-UA-Compatible" content="IE=edge">
-	<meta name="viewport" content="width=device-width, initial-scale=1">
-	<link rel="shortcut icon" href="../images/n-logo-dark-128x128-57.png" type="image/x-icon">
-	<meta name="description" content="">
+    <head>
+        <title>NeigbourGood</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link href="../css/bootstrap.min.css" rel="stylesheet" type="text/css"/>
 
-	<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic&amp;subset=latin">
-	<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Montserrat:400,700">
-	<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Raleway:400,100,200,300,500,600,700,800,900">
-	<link rel="stylesheet" href="../et-line-font-plugin/style.css">
-	<link rel="stylesheet" href="../bootstrap-material-design-font/css/material.css">
-	<link rel="stylesheet" href="../tether/tether.min.css">
-	<link rel="stylesheet" href="../bootstrap/css/bootstrap.min.css">
-	<link rel="stylesheet" href="../socicon/css/socicon.min.css">
-	<link rel="stylesheet" href="../animate.css/animate.min.css">
-	<link rel="stylesheet" href="../dropdown/css/style.css">
-	<link rel="stylesheet" href="../theme/css/style.css">
-	<link rel="stylesheet" href="../mobirise/css/mbr-additional.css" type="text/css">
-	
-    <style>
-        .gm-style .gm-style-iw {
-            font-size: 16px;
-            font-weight: bold;
-            color:black;
-            font-family: sans-serif;
-            text-transform: uppercase;
-        }
-    </style>
+        <script src="../js/jquery.min.js" type="text/javascript"></script>
+        <script src="../js/bootstrap.min.js" type="text/javascript"></script>
+        <script src="../js/plotly-latest.min.js" type="text/javascript"></script>
+        <script src="../js/drawChart.js"></script>
+        <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCcvtV_71ZGFAUUcS9_u_D1ZFHi2BWLjao&libraries=places"></script>
 
-    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCcvtV_71ZGFAUUcS9_u_D1ZFHi2BWLjao&libraries=places"></script>
-	
-	<script>	
-        var map;
-        var infowindow;
-        var facilities = [];
 
-    	//this function is used for receive data pass from home.html and get geographical parameters of target suburb
-    	function initialize() {
-    		var loc = "";
-    		var eFeature = "";
-    		var rate = "";
-
-    		var query = window.location.search.substring(1);
-    		var parameters = query.split("&");
-
-    		//filter and initialise parameters
-    		loc = parameters[0].replace("suburb=", "").replace("+", " ");
-    		
-    	    //get facilities parameters
-    		var count = 0;
-    		for (i = 0; i < parameters.length; i++) {
-    		    if (parameters[i].indexOf("facilities") !== -1) {
-    		        //alert (parameters[i]);
-    		        facilities[count] = parameters[i].replace("facilities=", "");
-    		        count++;
-    		    }
-    		}
-			
-			//retrieve geographic parameters from google api
-			var targetLoc = loc;
-			var tempArray = targetLoc.split(" ");
-
-			var geocoder = new google.maps.Geocoder();
-			geocoder.geocode({'address': loc}, function(results, status) {
-				if (status === google.maps.GeocoderStatus.OK) {
-					var lat = results[0].geometry.location.lat();
-					var lng = results[0].geometry.location.lng();
-
-					//get suburb name 
-					var loc_info = results[0].address_components;
-					var flag_hasSuburb = false;
-					for (i = 0; i < loc_info.length; i++) {
-					    if (loc_info[i].types.indexOf('locality') !== -1) {
-					        targetLoc = loc_info[i].long_name;
-					        flag_hasSuburb = true;
-					    }
-					}
-
-				    //show alert info when cannot find suburb
-					if (flag_hasSuburb == false) {
-					    alert("Sorry, we cannot locate to a suitable suburb.");
-					}
-
-					var strictBounds = new google.maps.LatLngBounds(
-                            new google.maps.LatLng(-38.310532, 144.081150),
-                            new google.maps.LatLng(-37.417193, 146.157566)
-                        );
-					var targetCenter = new google.maps.LatLng(lat, lng);
-					if (strictBounds.contains(targetCenter)) {
-					    var geocoder = new google.maps.Geocoder();
-					    geocoder.geocode({ 'address': targetLoc + ', Victoria, Australia' }, function (results, status) {
-					        if (status === google.maps.GeocoderStatus.OK) {
-					            var lat = results[0].geometry.location.lat();
-					            var lng = results[0].geometry.location.lng();
-					            initMap(lat,lng,targetLoc);
-					        } else {
-					            document.getElementById("googleMap").innerhtml = "Geocode was not successful for the following reason:";
-					        }
-					    });
-					} else {
-					    alert("Please only input location within Melbourne.");
-					}
-				} else {
-				    alert("Please check your input, it should be either a suburb name or a post code.");
-				  //document.getElementById("googleMap").innerhtml = "Geocode was not successful for the following reason:";
-				}			
-			});
-		
-		}
-	
-		//this function is used for drawing a result map
-    	function initMap(lat,lng,targetLoc) {
-			//locate the map center to target suburb's center
-			var myCenter=new google.maps.LatLng(lat, lng);
-			var mapProp = {
-			center:myCenter,
-			clickableIcons: false,
-			disableDoubleClickZoom: true,
-			zoom:14,
-			draggable: false,
-			scrollwheel: false,
-			clickable: false,
-			mapTypeId:google.maps.MapTypeId.HYBRID
-			};
-
-		
-			//locate drawing position
-			map = new google.maps.Map(document.getElementById("googleMap"),mapProp);
-	
-			if (facilities.length !== 0) {
-			    infowindow = new google.maps.InfoWindow({
-			        content: '<div style="color:black">' + '</div>'
-			    });
-			    var service = new google.maps.places.PlacesService(map);
-			    service.nearbySearch({
-			        location: { lat: lat, lng: lng },
-			        radius: 1000,
-			        types: facilities
-			    }, callback);
-			}
-			
-
-			//drawing suburbs boundaries in victoria and highlight target suburb
-			var layer = new google.maps.FusionTablesLayer({
-			    suppressInfoWindows: true,
-				query: {
-				  select: 'geometry',
-				  from: '1eP2GkW0yhBY7r9uZG_LKiV6E7iFqTZgG256sNg6Q'
-				},
-				styles: [{
-				  polygonOptions: {
-					strokeColor: '#000000' ,
-					strokeOpacity: 0.8,
-					strokeWeight: 2,
-					fillColor: '#000000',
-					fillOpacity: 0.4
-					}
-				},{
-					where: "'Suburb Name' =" + "'" + targetLoc + "'",
-					polygonOptions: {
-						strokeColor: '#000000' ,
-						strokeOpacity: 0.8,
-						strokeWeight: 2,
-						fillColor: '#000000',
-						fillOpacity: 0.1
-					}
-				}]
-			});
-	  
-			//draw map
-			layer.setMap(map);
-					
-			//draw marker
-			//marker.setMap(map);
-		
-    	    //initialise infowindow for marker
-			/*var infowindow = new google.maps.InfoWindow({
-			    content: '<div style="color:black">' + eLv + '</div>'
-			});
-            
-
-			//draw infowindow
-			infowindow.open(map,marker);*/
-		}
-	
-    	function callback(results, status) {
-    	    if (status === google.maps.places.PlacesServiceStatus.OK) {
-    	        for (var i = 0; i < results.length; i++) {
-    	            createMarker(results[i]);
-    	        }
-    	    }
-    	}
-
-    	function createMarker(place) {
-    	    var placeLoc = place.geometry.location;
-    	    var marker = new google.maps.Marker({
-    	        map: map,
-    	        position: place.geometry.location
-    	    });
-
-    	    google.maps.event.addListener(marker, 'click', function () {
-    	        infowindow.setContent(place.name);
-    	        infowindow.open(map, this);
-    	    });
-        }
-	
-		function capitalizeFirstLetter(string) {
-			return string.charAt(0).toUpperCase() + string.slice(1);
-		}
-		
-		//run function when load current page
-		google.maps.event.addDomListener(window, 'load', initialize);
-	</script>
-
-  
-</head>
-
-<body>
-<section id="menu-26">
-    <nav class="navbar navbar-dropdown bg-color transparent navbar-fixed-top">
-        <div class="container">
-            <div class="mbr-table">
-                <div class="mbr-table-cell">
-					<div class="navbar-brand">
-						<a href="../../home.html" class="navbar-logo">
-							<img src="../images/neighborgood-dark-585x128-77-585x128-68.png" />
-						</a>
-						<button class="navbar-toggler pull-xs-right hidden-md-up" type="button" data-toggle="collapse" data-target="#exCollapsingNavbar">
-							<div class="hamburger-icon"></div>
-						</button>
-						<ul class="nav-dropdown collapse pull-xs-right nav navbar-nav navbar-toggleable-sm" id="exCollapsingNavbar">
-							<li class="nav-item dropdown">
-								<a class="nav-link link" href="../../home.html">HOME</a>
-							</li>
-							<li class="nav-item">
-								<a class="nav-link link" href="../../suburb.html">SHARE</a>
-							</li>
-							<li class="nav-item">
-								<a class="nav-link link" href="../../temp.html">ABOUT</a>
-							</li>
-						</ul>
-						<button hidden="" class="navbar-toggler navbar-close" type="button" data-toggle="collapse" data-target="#exCollapsingNavbar">
-							<div class="close-icon"></div>
-						</button>	
-					</div>
+        
+        <!--<link href="../css/googleMap.css" rel="stylesheet" type="text/css"/>-->
+        <!--
+        <script src="assets/js/googleMap.js" type="text/javascript"></script>
+        -->
+        <script src="../js/initMap.js"></script>
+        <style>
+            body { padding-top: 70px;  
+            }
+            #navbarimagelogo{margin-top: -5px;}
+            .container *
+            {
+                /*border: 1px black solid;*/
+            }
+            #map
+            {
+                height: 500px;
+            }
+            .panel-heading a:after {
+                font-family:'Glyphicons Halflings';
+                content:"\e114";
+                float: right;
+                color: grey;
+            }
+            .panel-heading a.collapsed:after {
+                content:"\e080";
+            }
+            .scrollable
+            {
+                height: 500px;
+                max-height: 500px;
+                overflow-y:scroll; 
+            }
+            .list-group-horizontal .list-group-item {
+                display: inline-block;
+            }
+            .list-group-horizontal .list-group-item {
+                margin-bottom: 0;
+                margin-left:-4px;
+                margin-right: 0;
+            }
+            .list-group-horizontal .list-group-item:first-child {
+                border-top-right-radius:0;
+                border-bottom-left-radius:4px;
+            }
+            .list-group-horizontal .list-group-item:last-child {
+                border-top-right-radius:4px;
+                border-bottom-left-radius:0;
+            }
+            .sameWidht33Percent a
+            {
+                width: 33%;
+            }
+            .dataSetSelector
+            {
+                height: 300px;
+            }
+            .dataSetSelector a
+            {
+                text-align: center;
+                line-height: 2.5;
+                height: 20%;
+                font-weight: bold;
+            }
+            .main-svg
+            {
+                background: none !important;
+            }
+        </style>
+    </head>
+    <body>
+        <!--     top menu        -->
+        <nav class="navbar navbar-inverse navbar-fixed-top">
+            <div class="container-fluid">
+                <!--header-->
+                <div class="navbar-header">
+                    <a class="navbar-brand" href="../../home.html">
+                        <img src="../img/logo.png" alt="logo" height="30" id="navbarimagelogo"/>
+                    </a>
+                </div>
+                <!--items-->
+                <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-8"> 
+                    <ul class="nav navbar-nav"> 
+                        <li class="active">
+                            <a href="../../home.html">Home</a>
+                        </li> 
+                        <li>
+                            <a href="#">Link</a>
+                        </li> 
+                        <li>
+                            <a href="#">Link</a>
+                        </li> 
+                    </ul> 
                 </div>
             </div>
-        </div>
-    </nav>
-</section>
+        </nav> 
+        <!--main section-->
+        <div class="container">
+            <!--first row-->
+            <!--map|info-->
+            <div class="row">
+                <!--map col-->
+                <div class="col-md-7">
+                    <div id="googleMap"  style="width: 100%; height: 500px;"></div>
+                </div>
+                <!--info col-->
+                <div class="col-md-5 scrollable">
+                    <div class="panel-group" id="accordion">
+                        <?php
+                            if(!empty($_GET['eFeatures'])) {
+                                foreach($_GET['eFeatures'] as $check) {
+                                    $panelNames[] = $check;
+                                }
+                            }
 
-<section class="mbr-footer mbr-section mbr-section-md-padding mbr-parallax-background" id="contacts3-14" style="background-image: url(../images/jumbotron.jpg); padding-top: 120px; padding-bottom: 15%;">
-	<div class="row">
-    <div class="mbr-overlay" style="opacity: 0.5; background-color: rgb(60, 60, 60);"></div>		
-	<div id="googleMap" style="width:800px;height:600px;float:left;margin-right: 150px">
-    </div>		
-        <div id="details" style="float:left; color:#FFFFFF;">
-            <h3>Below is the report crime happend in 2005:</h3>
-            <!--connect to DB and retrieve data-->
-            <p id="eFigure" style="color:#FFFFFF;">
-                
-                <?php
-                /*
-                //read DB deatail from file
-                $db_temp = file_get_contents("../info/dbInfo.txt");
-                $db_info = explode(";",$db_temp);
-                $servername = $db_info[0];
-                $username = $db_info[1];
-                $password = $db_info[2];
-                $dbname = $db_info[3];
+                            foreach ($panelNames as $value){
+                                echo"
+                                    <div class='panel panel-default' id='panel1'>
+                                        <div class='panel-heading'>
+                                            <h4 class='panel-title'>
+                                            <a data-toggle='collapse' data-target='#collapseOne' href='#collapseOne'>
+                                                ". $value . "
+                                            </a>
+                                            </h4>
+                                    </div>
+                                    <div id='collapseOne' class='panel-collapse collapse in'>
+                                        <div class='panel-body'>test</div>
+                                        </div>
+                                    </div>
+                                    ";
+                            }
 
+                        ?>                          
+                    </div>
+                </div>
 
+            </div>
+            <br/>
+            <!--row 2 charts-->
 
-			    //Using GET
-			    $var_value = $_GET['suburb'];
-			    if ($var_value == ""){
-				    $var_value = "Melbourne";
-			    }
+            <div class="row" style="clear: both">
+                <!--data set selector col-->
+                <div class="col-md-2 dataSetSelector"  id="dataSetSelector">
+                    <div class="list-group">
+                        <?php
+                        //$eVar = $_GET['eFeatures'];
 
-			    // Create connection
-			    $conn = new mysqli($servername, $username, $password, $dbname);
-			    // Check connection
-			    if ($conn -> connect_error) {
-				     die("Connection failed: " . $conn->connect_error);
-			    }
+                        if(!empty($_GET['eFeatures'])) {
+                            foreach($_GET['eFeatures'] as $check) {
+                                $eArray[] = $check;
+                            }
+                        }
 
+                       // print_r(array_values($eArray));
 
-			    //generate crime report
-			    $sql = "SELECT * FROM melbmap where suburb = UPPER('$var_value')";
-			    $result = $conn->query($sql);
-
-			    if ($result->num_rows > 0) {
-				     //output data of each row
-				     while($row = $result->fetch_assoc()) {
-					     $postcode = $row["postcode"];
-                         $sql = "SELECT * FROM crimemap where postcode = '$postcode' and year = 2015";
-                         $result = $conn->query($sql);
-                         if ($result->num_rows > 0) {
-                             // output data of each row
-                             while($row = $result->fetch_assoc()) {
-                                 $crReport = $row["report"];
-                                 echo  $crReport;
-                             }
-                         } else {
-                             echo "0";
-                         }
-				     }
-			    } else {
-				     echo "0";
-			    }
-
-			    $conn->close();*/
-                ?>
-            </p>
-        </div>		
-</section>
-
-<section>
-	
-</section>
-
-<footer class="mbr-small-footer mbr-section mbr-section-nopadding" id="footer1-2" style="background-color: rgb(50, 50, 50); padding-top: 1.75rem; padding-bottom: 1.75rem;">
-    
-    <div class="container">
-        <p class="text-xs-center">Copyright (c) 2016 Nirvana.</p>
-    </div>
-</footer>
-
-  <script src="../web/assets/jquery/jquery.min.js"></script>
-  <script src="../tether/tether.min.js"></script>
-  <script src="../bootstrap/js/bootstrap.min.js"></script>
-  <script src="../smooth-scroll/SmoothScroll.js"></script>
-  <script src="../viewportChecker/jquery.viewportchecker.js"></script>
-  <script src="../jarallax/jarallax.js"></script>
-  <script src="../dropdown/js/script.min.js"></script>
-  <script src="../touchSwipe/jquery.touchSwipe.min.js"></script>
-  <script src="../theme/js/script.js"></script>
-  <script src="../formoid/formoid.min.js"></script>
-  
-  
-  <input name="animation" type="hidden">
-  </body>
+                        $count = 0;
+                        foreach ($eArray as $value){
+                            $count++;
+                            echo"<a  class='list-group-item' id='ds".$count ."'>". $value ."</a>";
+                        }
+                        ?>
+                    </div>
+                </div>
+                <!--chart col-->
+                <div class="col-md-10">
+                    <!--chart type row-->
+                    <div class="row">
+                        <div class="list-group list-group-horizontal sameWidht33Percent" id="chartTypeSelector">
+                            <a  class="list-group-item active" id="line"> line chart</a>
+                            <a  class="list-group-item" id="bar">bar chart</a>
+                            <a  class="list-group-item" id="pie">pie chart</a>
+                        </div>
+                    </div>
+                    <!--main chart row-->
+                    <div class="row">
+                        <div id="chart" style="width:100%;height:290px;"></div>
+                    </div>
+                </div>
+            </div>   
+            </body>
 </html>
