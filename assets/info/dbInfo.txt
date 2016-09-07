@@ -1,1 +1,1 @@
-192.168.1.100;admin;admin;ngdb
+118.139.49.5;admin;admin;ngdb

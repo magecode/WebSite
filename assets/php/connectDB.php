@@ -18,26 +18,61 @@ if ($conn -> connect_error) {
     die("Connection failed: " . $conn->connect_error);
 }
 //generate crime report
-$sql = "SELECT * FROM melbmap where suburb = UPPER('$var_value')";
-$result = $conn->query($sql);
-if ($result->num_rows > 0) {
-    //output data of each row
+$sql_cr = "SELECT a.year, sum(a.report) as crime
+        FROM crimemap a, melbmap b
+        where b.suburb = UPPER('$var_value') AND a.postcode = b.postcode
+        AND a.year BETWEEN 2012 AND 2015
+        GROUP BY a.year";
+
+$result = $conn->query($sql_cr);
+$crimeRate = "";
+if ($result->num_rows > 0){
     while($row = $result->fetch_assoc()) {
-        $postcode = $row["postcode"];
-        $sql = "SELECT * FROM crimemap where postcode = '$postcode' and year = 2015";
-        $result = $conn->query($sql);
-        if ($result->num_rows > 0) {
-            // output data of each row
-            while($row = $result->fetch_assoc()) {
-                $crReport = $row["report"];
-                echo  $crReport;
-            }
-        } else {
-            echo "0";
-        }
+        $crReport = $row["crime"]."/";
+        $crimeRate =$crimeRate . $crReport;
     }
-} else {
-    echo "0";
+}else{
+    $crimeRate = "0/0/0/0";
+    }
+$crimeRate  = $crimeRate . "#";
+
+//generate population density report
+$sql_pd = "SELECT a.year, ROUND(a.population / b.area) as popdensity
+        FROM popdensity a, suburbarea b
+        where a.suburb = b.suburb AND UPPER(a.suburb) LIKE UPPER('$var_value')
+        GROUP BY a.year";
+
+$result = $conn->query($sql_pd);
+$popDensity = "";
+if ($result->num_rows > 0){
+    while($row = $result->fetch_assoc()) {
+        $pdReport = $row["popdensity"]."/";
+        $popDensity =$popDensity . $pdReport;
+    }
+}else{
+    $popDensity = "0/0/0/0";
 }
+$popDensity  = $popDensity . "#";
+
+
+//generate price(buy) report
+$sql_pBuy = "SELECT year, buy
+        FROM housebuy
+        where suburb LIKE UPPER('$var_value')";
+
+$result = $conn->query($sql_pBuy);
+$pBuy = "";
+if ($result->num_rows > 0){
+    while($row = $result->fetch_assoc()) {
+        $buyReport = $row["buy"]."/";
+        $pBuy =$pBuy . $buyReport;
+    }
+}else{
+    $pBuy = "0/0/0/0";
+}
+$pBuy  = $pBuy . "#";
+
+
+echo $crimeRate . $popDensity. $pBuy;
 $conn->close();
 ?>

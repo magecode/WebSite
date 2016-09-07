@@ -99,7 +99,7 @@ function initMap(lat,lng,targetLoc) {
         var service = new google.maps.places.PlacesService(map);
         service.nearbySearch({
             location: { lat: lat, lng: lng },
-            radius: 5000,
+            radius: 1800,
             types: facilities
         }, callback);
     }

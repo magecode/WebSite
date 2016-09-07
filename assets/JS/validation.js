@@ -10,8 +10,9 @@ function validateForm(theForm) {
         return false;
     } else {
         var checkCR = document.getElementById("CrimeRate");
-        var checkPD = document.getElementById("Population");
-        if (checkCR.checked || checkPD.checked) {
+        var checkPD = document.getElementById("PopulationDensity");
+        var checkPR = document.getElementById("Price");
+        if (checkCR.checked || checkPD.checked || checkPR.checked) {
             checkFlag = true;
         }
         if (checkFlag == false) {

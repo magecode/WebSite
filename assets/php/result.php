@@ -99,10 +99,7 @@
                             <a href="../../home.html">Home</a>
                         </li> 
                         <li>
-                            <a href="#">Link</a>
-                        </li> 
-                        <li>
-                            <a href="#">Link</a>
+                            <a href="../../temp.html">About Us</a>
                         </li> 
                     </ul> 
                 </div>
@@ -127,7 +124,33 @@
                                 }
                             }
 
+                            $text = "";
                             foreach ($panelNames as $value){
+                                if ($value == "CrimeRate"){
+                                    $text =
+                                        "<p>The figure of crimes in your chosen suburb</p><br>
+                                         <p>You can take a look at the diagram in the bottom of this web page.<br>
+                                            It shows the sum of below two crime categories:<br>
+                                            1. Crimes against the person;<br>
+                                            2. Property and deception offences</p><br>
+                                        <p>Data Source: <a href='https://www.crimestatistics.vic.gov.au/'>Crime Statistic Agency Victoria</a></p><br>
+                                        <p>We may lack of certain suburb's data, all missing data will be showed as 0.</p>";
+                                }else{
+                                     if($value == "PopulationDensity"){
+                                         $text = "<p>It shows population per unit area. The higher the figure is, the more people is living in that suburb.</p><br>
+                                        <p>You can take a look at the diagram in the bottom of this web Page.<br>
+                                        It shows how many people is living per square meters in your target suburb.</p>
+                                        <p>Data Source: <a href='http://www.abs.gov.au/'>Australia Bureau of Statistics</a></p><br>
+                                        <p>We may lack of certain suburb's data, all missing data will be showed as 0.</p>";
+                                     }else{
+                                         if($value == "Price"){
+                                             $text = "<p>It shows the average buying price for a property.<br>
+                                            Since the real market is varying a lot, this information is just for reference.</p>
+                                            <p>Data Source: <a href='http://www.delwp.vic.gov.au/'>Victoria Government Department of Environment, Land, Water & Planning</a></p><br>
+                                            <p>We may lack of certain suburb's data, all missing data will be showed as 0.</p>";
+                                         }
+                                     }
+                                 }
                                 echo"
                                     <div class='panel panel-default' id='panel1'>
                                         <div class='panel-heading'>
@@ -138,7 +161,7 @@
                                             </h4>
                                     </div>
                                     <div id='collapseOne' class='panel-collapse collapse in'>
-                                        <div class='panel-body'>test</div>
+                                        <div class='panel-body'>".$text."</div>
                                         </div>
                                     </div>
                                     ";
@@ -191,6 +214,6 @@
                     </div>
                 </div>
             </div>  
-            <div id="test"></div> 
+            <div id="test" style="display:none;"></div>
             </body>
 </html>

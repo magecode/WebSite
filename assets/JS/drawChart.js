@@ -29,18 +29,13 @@ $(document).ready(function () {
 
 function drawChart(selectedChart, selectedDataSet, chart)
 {
-    data = getData(selectedChart, selectedDataSet);
-    Plotly.newPlot(chart, data,
-            {margin: {t: 0}});
+    //retrieve data
+    var target = "";
 
-}
-function getData(selectedChart, selectedDataSet)
-{
-    //var target = "MELBOURNE";
-    var target1 = document.getElementById("ds1").innerHTML;
     var query = window.location.search.substring(1);
     var parameters = query.split("&");
 
+    //get envrionment features
     var count = 0;
     var eFeatures = [];
     for (i = 0; i < parameters.length; i++) {
@@ -50,40 +45,12 @@ function getData(selectedChart, selectedDataSet)
             count++;
         }
     }
-    var target = getSuburbName(parameters, callback);
-    alert(target);
-    //retrieveDB(target);
-    //alert(DBResponse);
-    var test = [5, 5, 6, 4, 9];
-    //var hardCodedData = {ds1: {x: [1, 2, 3], y: [4, 5, 6],type: "line" }, ds2: {x: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10], y: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10], type: "line"}, ds3: {x: [8, 9, 6, 3, 4], y: [8, 6, 3, 7, 8], type: "line"}};
-    var hardCodedData = { ds1: { x: [2012, 2013, 2014, 2015, 2016], y: test, type: "line" }, ds2: { x: [2012, 2013, 2014, 2015, 2016], y: [2, 3, 4, 5, 6], type: "line" } };
-    var data = hardCodedData[selectedDataSet];
-    data.type = selectedChart;
-    if (selectedChart === "pie")
-    {
-        return [{values: data.y, lables: data.x, type: "pie"}];
-    }
-    return [data];
-}
-
-function retrieveDB(target) {
-    var xhttp;
-    xhttp = new XMLHttpRequest();
-    xhttp.onreadystatechange = function () {
-        if (this.readyState == 4 && this.status == 200) {
-            document.getElementById("test").innerHTML = this.responseText;
-            //DBResponse = this.responseText;
-        }
-    };
-
-    xhttp.open("GET", "connectDB.php?suburb=" + target, true);
-    xhttp.send();
-}
-
-function getSuburbName(parameters, callback) {
+    
+    //get target suburb name
+    //since gecoder is asynchronise function, do following step within its code body
     var loc = "";
     loc = parameters[0].replace("suburb=", "").replace("+", " ");
-			
+
     //retrieve geographic parameters from google api
     var targetLoc = loc.replace(/%2C/g, ",").replace(/\+/g, " ");
 
@@ -96,10 +63,81 @@ function getSuburbName(parameters, callback) {
             for (i = 0; i < loc_info.length; i++) {
                 if (loc_info[i].types.indexOf('locality') !== -1) {
                     targetLoc = loc_info[i].long_name;
-                    alert(targetLoc);
-                    callback(targetLoc);
+                    dataManage(targetLoc, selectedChart, selectedDataSet, count);
                 }
             }
         }
     });
+}
+function getData(selectedChart, selectedDataSet, count, yData)
+{
+    //alert(count);
+    var element1 = {};
+    var element2 = {};
+    var element3 = {};
+    var dataSet = {};
+    var container = yData.split("#");
+
+    for (i = 0; i < count; i++) {
+        if (i == 0) {
+            var temp = container[i].split("/");
+            element1.x = [2012, 2013, 2014, 2015];
+            element1.y = temp;
+            element1.type = "line";
+            dataSet.ds1 = element1;
+        } else {
+            if (i == 1) {
+                var temp = container[i].split("/");
+                element2.x = [2012, 2013, 2014, 2015];
+                element2.y = temp;
+                element2.type = "line";
+                dataSet.ds2 = element2;
+            } else {
+                if (i == 2) {
+                    var temp = container[i].split("/");
+                    element3.x = [2012, 2013, 2014, 2015];
+                    element3.y = temp;
+                    element3.type = "line";
+                    dataSet.ds3 = element3;
+                }
+            }
+        }
+    }
+
+    var data = dataSet[selectedDataSet];
+    data.type = selectedChart;
+    if (selectedChart === "pie")
+    {
+        return [{values: data.y, lables: data.x, type: "pie"}];
+    }
+    return [data];
+}
+
+function dataManage(target, selectedChart, selectedDataSet, count) {
+    var xhttp;
+    xhttp = new XMLHttpRequest();
+    xhttp.onreadystatechange = function () {
+        if (this.readyState == 4 && this.status == 200) {
+            document.getElementById("test").innerHTML = this.responseText;
+            var yData = document.getElementById("test").innerHTML;
+            var layout = {
+                xaxis: {
+                    title: 'Year',
+                    showgrid: false,
+                    zeroline: false
+                },
+                yaxis: {
+                    title: 'Figure',
+                    showline: false
+                },
+                margin: {t:0.5}
+            };
+
+            data = getData(selectedChart, selectedDataSet, count, yData);
+            Plotly.newPlot(chart, data, layout);
+        }
+    };
+
+    xhttp.open("GET", "connectDB.php?suburb=" + target, true);
+    xhttp.send();
 }
