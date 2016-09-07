@@ -190,6 +190,7 @@
                         <div id="chart" style="width:100%;height:290px;"></div>
                     </div>
                 </div>
-            </div>   
+            </div>  
+            <div id="test"></div> 
             </body>
 </html>

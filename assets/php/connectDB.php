@@ -8,7 +8,6 @@ $password = $db_info[2];
 $dbname = $db_info[3];
 //Using GET
 $var_value = $_GET['suburb'];
-echo($var_value);
 if ($var_value == ""){
     $var_value = "Melbourne";
 }
