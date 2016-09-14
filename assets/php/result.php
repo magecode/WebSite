@@ -95,7 +95,7 @@
                 <!--items-->
                 <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-8"> 
                     <ul class="nav navbar-nav"> 
-                        <li class="active">
+                        <li>
                             <a href="../../home.html">Home</a>
                         </li> 
                         <li>
@@ -107,6 +107,9 @@
         </nav> 
         <!--main section-->
         <div class="container">
+            <div class="row">
+                <div class="col-md-7"><h3 id="suburbName" color="black"></h3></div>
+            </div>
             <!--first row-->
             <!--map|info-->
             <div class="row">
@@ -193,7 +196,12 @@
                         $count = 0;
                         foreach ($eArray as $value){
                             $count++;
-                            echo"<a  class='list-group-item' id='ds".$count ."'>". $value ."</a>";
+                            //echo "<script type='text/javascript'>alert('$count');</script>";
+                            if($count == 1){
+                                echo"<a  class='list-group-item active' id='ds1'>". $value ."</a>";
+                            }else{
+                                echo"<a  class='list-group-item' id='ds".$count ."'>". $value ."</a>";
+                            }
                         }
                         ?>
                     </div>

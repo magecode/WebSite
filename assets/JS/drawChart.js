@@ -6,6 +6,7 @@ $(document).ready(function () {
     var selectedDataSet = "ds1";
 
     var chart = document.getElementById('chart');
+
     drawChart(selectedChart, selectedDataSet, chart);
     $("#chartTypeSelector a").click(function () {
         selectedChart = $(this).attr("id");
@@ -45,7 +46,7 @@ function drawChart(selectedChart, selectedDataSet, chart)
             count++;
         }
     }
-    
+
     //get target suburb name
     //since gecoder is asynchronise function, do following step within its code body
     var loc = "";
@@ -53,7 +54,7 @@ function drawChart(selectedChart, selectedDataSet, chart)
 
     //retrieve geographic parameters from google api
     var targetLoc = loc.replace(/%2C/g, ",").replace(/\+/g, " ");
-
+    
     var geocoder = new google.maps.Geocoder();
     geocoder.geocode({ 'address': targetLoc }, function (results, status) {
         if (status === google.maps.GeocoderStatus.OK) {
@@ -63,6 +64,7 @@ function drawChart(selectedChart, selectedDataSet, chart)
             for (i = 0; i < loc_info.length; i++) {
                 if (loc_info[i].types.indexOf('locality') !== -1) {
                     targetLoc = loc_info[i].long_name;
+                    document.getElementById("suburbName").innerHTML = targetLoc + ", Victoria, Australia";
                     dataManage(targetLoc, selectedChart, selectedDataSet, count);
                 }
             }

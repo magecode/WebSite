@@ -39,6 +39,7 @@ function initialize() {
             for (i = 0; i < loc_info.length; i++) {
                 if (loc_info[i].types.indexOf('locality') !== -1) {
                     targetLoc = loc_info[i].long_name;
+                    document.getElementById("suburbName").innerHTML = targetLoc + ", Victoria, Australia";
                     flag_hasSuburb = true;
                 }
             }
@@ -84,7 +85,7 @@ function initMap(lat,lng,targetLoc) {
         clickableIcons: false,
         disableDoubleClickZoom: true,
         zoom:14,
-        draggable: false,
+        draggable: true,
         scrollwheel: false,
         clickable: false,
         mapTypeId:google.maps.MapTypeId.HYBRID
