@@ -135,18 +135,6 @@ function initMap(lat,lng,targetLoc) {
 	  
     //draw map
     layer.setMap(map);
-					
-    //draw marker
-    //marker.setMap(map);
-		
-    //initialise infowindow for marker
-    /*var infowindow = new google.maps.InfoWindow({
-        content: '<div style="color:black">' + eLv + '</div>'
-    });
-    
-
-    //draw infowindow
-    infowindow.open(map,marker);*/
 }
 	
 function callback(results, status) {

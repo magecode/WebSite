@@ -1,5 +1,4 @@
-﻿
-$(document).ready(function () {
+﻿$(document).ready(function () {
     //initMap();
     
     var selectedChart = "line";
@@ -35,14 +34,18 @@ function drawChart(selectedChart, selectedDataSet, chart)
 
     var query = window.location.search.substring(1);
     var parameters = query.split("&");
+    //alert(parameters[0]);
 
     //get envrionment features
     var count = 0;
     var eFeatures = [];
-    for (i = 0; i < parameters.length; i++) {
-        if (parameters[i].indexOf("eFeatures") !== -1) {
-            //alert (parameters[i]);
-            eFeatures[count] = parameters[i].replace("eFeatures%5B%5D=", "");
+    for (i = 1; i < parameters.length; i++) {
+        var rangeValue = parameters[i].match(/\d+/)[0];
+        if (rangeValue != 0) {
+            /*
+            if(parameters[i].match(/.cr./)){
+                eFeatures[count] = "CrimeRate";
+            }*/
             count++;
         }
     }
@@ -54,7 +57,6 @@ function drawChart(selectedChart, selectedDataSet, chart)
 
     //retrieve geographic parameters from google api
     var targetLoc = loc.replace(/%2C/g, ",").replace(/\+/g, " ");
-    
     var geocoder = new google.maps.Geocoder();
     geocoder.geocode({ 'address': targetLoc }, function (results, status) {
         if (status === google.maps.GeocoderStatus.OK) {
@@ -64,7 +66,6 @@ function drawChart(selectedChart, selectedDataSet, chart)
             for (i = 0; i < loc_info.length; i++) {
                 if (loc_info[i].types.indexOf('locality') !== -1) {
                     targetLoc = loc_info[i].long_name;
-                    document.getElementById("suburbName").innerHTML = targetLoc + ", Victoria, Australia";
                     dataManage(targetLoc, selectedChart, selectedDataSet, count);
                 }
             }

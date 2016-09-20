@@ -10,7 +10,7 @@
         <script src="../js/plotly-latest.min.js" type="text/javascript"></script>
         <script src="../js/drawChart.js"></script>
         <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCcvtV_71ZGFAUUcS9_u_D1ZFHi2BWLjao&libraries=places"></script>
-
+        <script src="../js/processTop.js" type="text/javascript"></script>
 
         
         <!--<link href="../css/googleMap.css" rel="stylesheet" type="text/css"/>-->
@@ -121,14 +121,57 @@
                 <div class="col-md-5 scrollable">
                     <div class="panel-group" id="accordion">
                         <?php
+
+                        //$temp = substr($_SERVER['REQUEST_URI'], strpos($_SERVER['REQUEST_URI'], 'eFeatures'));
+                        $ranges = explode('&', $_SERVER['REQUEST_URI']);
+                        //echo $ranges[3];
+                        //$ranges = preg_grep('.Range.',$ranges);
+                        unset($ranges[0]);
+
+                        $features = [];
+
+                        foreach($ranges as $value){
+                            //echo $value;
+                            if(strpos($value, "cr") !== false){
+                                $features[] = "CrimeRate";
+                            }else if(strpos($value, "pop") !== false){
+                                $features[] = "PopulationDensity";
+                            }else if(strpos($value, "pr") !== false){
+                                $features[] = "Price";
+                            }
+
+                        }
+
+
+
+                        echo "
+                                    <div class='panel panel-default' id='panel1'>
+                                        <div class='panel-heading'>
+                                            <h4 class='panel-title'>
+                                            <a data-toggle='collapse' data-target='#collapseOne' href='#collapseOne'>
+                                                Top 5 Suburbs list
+                                            </a>
+                                            </h4>
+                                    </div>
+                                    <div id='collapseOne' class='panel-collapse collapse in'>
+                                        <div class='panel-body'></div>
+                                        <p id = 'top5'></p>
+                                        </div>
+                                    </div>
+                                    ";
+
+
+                            /*
                             if(!empty($_GET['eFeatures'])) {
                                 foreach($_GET['eFeatures'] as $check) {
                                     $panelNames[] = $check;
                                 }
                             }
+                            */
+
 
                             $text = "";
-                            foreach ($panelNames as $value){
+                            foreach ($features as $value){
                                 if ($value == "CrimeRate"){
                                     $text =
                                         "<p>The figure of crimes in your chosen suburb</p><br>
@@ -183,18 +226,28 @@
                 <div class="col-md-2 dataSetSelector"  id="dataSetSelector">
                     <div class="list-group">
                         <?php
-                        //$eVar = $_GET['eFeatures'];
+                        $ranges = explode('&', $_SERVER['REQUEST_URI']);
+                        unset($ranges[0]);
 
-                        if(!empty($_GET['eFeatures'])) {
-                            foreach($_GET['eFeatures'] as $check) {
-                                $eArray[] = $check;
+                        $features = [];
+
+                        foreach($ranges as $value){
+                            $int = filter_var($value, FILTER_SANITIZE_NUMBER_INT);
+                            //echo $int;
+                            if($int !== "0"){
+                                if(strpos($value, "cr") !== false){
+                                    $features[] = "CrimeRate";
+                                }else if(strpos($value, "pop") !== false){
+                                    $features[] = "PopulationDensity";
+                                }else if(strpos($value, "pr") !== false){
+                                    $features[] = "Price";
+                                }
                             }
                         }
 
-                       // print_r(array_values($eArray));
 
                         $count = 0;
-                        foreach ($eArray as $value){
+                        foreach ($features as $value){
                             $count++;
                             //echo "<script type='text/javascript'>alert('$count');</script>";
                             if($count == 1){
