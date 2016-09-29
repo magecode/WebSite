@@ -120,21 +120,30 @@ function dataManage(target, selectedChart, selectedDataSet, count) {
         if (this.readyState == 4 && this.status == 200) {
             document.getElementById("test").innerHTML = this.responseText;
             var yData = document.getElementById("test").innerHTML;
+            var title = $("#" + selectedDataSet + " center").text();
             var layout = {
                 xaxis: {
                     title: 'Year',
-                    showgrid: false,
-                    zeroline: false
+                    titlefont: {
+                        family: 'Courier New, monospace',
+                        size: 18,
+                        color: '#7f7f7f',
+                       
+                    }
+                    ,dtick: 1
                 },
                 yaxis: {
-                    title: 'Figure',
-                    showline: false
-                },
-                margin: {t:0.5}
+                    title: title,
+                    titlefont: {
+                        family: 'Courier New, monospace',
+                        size: 18,
+                        color: '#7f7f7f'
+                    }
+                }
             };
 
             data = getData(selectedChart, selectedDataSet, count, yData);
-            Plotly.newPlot(chart, data, layout);
+            Plotly.newPlot(chart, data, layout, {staticPlot:true});
         }
     };
 

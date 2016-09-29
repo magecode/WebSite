@@ -3,7 +3,7 @@
 <!--[if (gte IE 9)|!(IE)]><html lang="en" class="no-js"> <![endif]-->
 <html lang="en">
 
-<head>
+  <head>
     <!-- Clear Cache-->
     <meta http-equiv="Cache-control" content="no-cache" />
 
@@ -25,7 +25,8 @@
 
     <!-- Font Awesome CSS -->
     <link rel="stylesheet" href="../font-awesome/css/font-awesome.min.css" type="text/css" />
-
+    <link rel="stylesheet" href="../font-awesome-4.6.3/css/font-awesome.min.css" type="text/css" />
+    
     <!-- Owl Carousel CSS -->
     <link rel="stylesheet" href="../css/owl.carousel.css" type="text/css" />
     <link rel="stylesheet" href="../css/owl.theme.css" type="text/css" />
@@ -70,111 +71,129 @@
     <script src="../js/map.js"></script>
     <script src="../js/script.js"></script>
     <script>
-        function refreshPage(id) {
-            var suburb = document.getElementById("top" + id).innerHTML;
-            
-            var query = window.location.search.substring(1);
-            //alert(query);
-            var parameters = query.split("&");
-            parameters[0] = "suburb=" + suburb + "%2C+Victoria%2C+Australia";
-            var address = parameters[0];
-            for (i = 1; i <= parameters.length - 1; i++) {
-                address = address + "&" + parameters[i];
-            }
-            //alert(address);
-            //parameters[0] = "";
-            window.open("http://118.139.17.41/asset/php/result.php?" + address, "_self");
-        }
-        
-    </script>
-    
+      function refreshPage(id) {
+      var suburb = document.getElementById("top" + id).innerHTML;
 
-</head>
-<body>
+      var query = window.location.search.substring(1);
+      //alert(query);
+      var parameters = query.split("&");
+      parameters[0] = "suburb=" + suburb + "%2C+Victoria%2C+Australia";
+      var address = parameters[0].replace(" ", "+");
+      for (i = 1; i <= parameters.length - 1; i++) {
+      address = address + "&" + parameters[i];
+      }
+      //alert(address);
+      //parameters[0] = "";
+      window.open("http://118.139.18.135/asset/php/result.php?" + address, "_self");
+      }
+
+    </script>
+
+
+      
+    <style>
+      .rating i
+      {
+      font-size:20px !important;
+      color: black;
+      background: none !important;
+      padding: 0 !important;
+      }
+      .active i
+      {
+      color: #FFD700;
+      }
+    </style>
+  </head>
+  <body>
 
     <header class="clearfix">
 
-        <!-- Clear Cache-->
-        <meta http-equiv="Cache-control" content="no-cache" />
+      <!-- Clear Cache-->
+      <meta http-equiv="Cache-control" content="no-cache" />
 
-        <!-- Start Top Bar -->
-        <div class="container">
-            <div class="row">
-                <div class="col-md-12">
-                    <div class="top-bar">
-                        <div class="row">
+      <!-- Start Top Bar -->
+      <div class="container">
+        <div class="row">
+          <div class="col-md-12">
+            <div class="top-bar">
+              <div class="row">
 
-                            <div class="col-md-6">
-                                <!-- Start Contact Info -->
-                                <ul class="contact-details">
-                                    <li>
-                                        <i class="fa fa-phone"></i>+12 345 678 000
-                                    </li>
-                                    <li>
-                                        <i class="fa fa-envelope-o"></i>support@neighbourgood.com
-                                    </li>
-                                </ul>
-                                <!-- End Contact Info -->
-                            </div><!-- .col-md-6 -->
+                <div class="col-md-6">
+                  <!-- Start Contact Info -->
+                  <ul class="contact-details">
+                    <li>
 
-                        </div>
+                      <i class="fa fa-phone"></i> 0470 060 868
 
+                    </li>
+                    <li>
 
-                    </div>
+                      <i class="fa fa-envelope-o"></i> atar15@student.monash.edu
+
+                    </li>
+                  </ul>
+                  <!-- End Contact Info -->
                 </div>
+                <!-- .col-md-6 -->
 
-            </div><!-- .row -->
-        </div><!-- .container -->
-        <!-- End Top Bar -->
+              </div>
 
-        <!-- Start  Logo & Naviagtion  -->
-        <div class="navbar navbar-default navbar-top">
-            <div class="container">
-                <div class="navbar-header">
-                    <!-- Stat Toggle Nav Link For Mobiles -->
-                    <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
-                        <i class="fa fa-bars"></i>
-                    </button>
-                    <!-- End Toggle Nav Link For Mobiles -->
-                    <a class="navbar-brand" href="index.html">Neighbourgood</a>
-                </div>
-                <div class="navbar-collapse collapse">
 
-                    <!-- Start Navigation List -->
-                    <ul class="nav navbar-nav navbar-right">
-                        <li>
-                            <a href="../../index.html">Home</a>
-                        </li>
-                        <li>
-                            <a>Your Target Location</a>
-                        </li>
-                        <li>
-                            <a href="../../about.html">About</a>
-                        </li>
-                        <li>
-                            <a href="../../contact.html">Contact</a>
-                        </li>
-                    </ul>
-                    <!-- End Navigation List -->
-                </div>
             </div>
+          </div>
+
         </div>
-        <!-- End Header Logo & Naviagtion -->
+        <!-- .row -->
+      </div>
+      <!-- .container -->
+      <!-- End Top Bar -->
+
+      <!-- Start  Logo & Naviagtion  -->
+      <div class="navbar navbar-default navbar-top">
+        <div class="container">
+          <div class="navbar-header">
+            <!-- Stat Toggle Nav Link For Mobiles -->
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+              <i class="fa fa-bars"></i>
+            </button>
+            <!-- End Toggle Nav Link For Mobiles -->
+            <a class="navbar-brand" href="../../index.html">Neighbourgood</a>
+          </div>
+          <div class="navbar-collapse collapse">
+
+            <!-- Start Navigation List -->
+            <ul class="nav navbar-nav navbar-right">
+              <li>
+                <a href="../../index.html">Home</a>
+              </li>
+              <li>
+                <a href="../../about.html">About</a>
+              </li>
+              <!--<li>
+                            <a href="../../contact.html">Contact</a>
+                        </li>-->
+            </ul>
+            <!-- End Navigation List -->
+          </div>
+        </div>
+      </div>
+      <!-- End Header Logo & Naviagtion -->
 
     </header>
 
 
     <!-- Start Header Section -->
     <div class="page-header">
-        <div class="overlay">
-            <div class="container">
-                <div class="row">
-                    <div class="col-md-12">
-                        <h1 id="suburbName"></h1>
-                    </div>
-                </div>
+      <div class="overlay">
+        <div class="container">
+          <div class="row">
+            <div class="col-md-12">
+              <h1 align="center" id="suburbName"></h1>
             </div>
+          </div>
         </div>
+      </div>
     </div>
     <!-- End Header Section -->
 
@@ -184,23 +203,32 @@
     <!-- Start Service Section -->
     <section id="resultMap" style="width: 100%; height: 500px;">
 
-        <div class="container"></div>
+
+      <div class="container"></div>
+
     </section>
     <!-- Start Service Section -->
 
 
     <!-- Start Abstract Section -->
-    <section class="fun-facts">
-        <div class="row">
-            <div class="col-md-12">
-                <div class="section-title text-center wow fadeInDown" data-wow-duration="2s" data-wow-delay="50ms">
-                    <h2 style="color:#ffffff;">Infomation Abstract (Based on 2015 reports)</h2>
-                </div>
-            </div>
+    <div class="page-header">
+      <h1 align="center">
+        More Statistics
+      </h1>
+    </div>
+
+
+    <section   class="fun-facts">
+      <div class="row">
+        <div class="col-md-12">
+          <div class="section-title text-center wow fadeInDown" data-wow-duration="2s" data-wow-delay="50ms">
+            <h2 style="color:#ffffff;">Infomation Abstract (Based on 2015 reports)</h2>
+          </div>
         </div>
-        <div class="container">
-            <div class="row">
-                <?php
+      </div>
+      <div class="container">
+        <div class="row">
+            <?php
                 $ranges = explode('&', $_SERVER['REQUEST_URI']);
                 unset($ranges[0]);
                 $features = [];
@@ -224,13 +252,19 @@
                         <div class='col-xs-12 col-sm-3 col-md-3 wow fadeInLeft'>
                             <div class='counter-item' style='height: 400px;'>
                                 <i class='fa fa-cloud-upload'></i>
-                                <h3>Top 5 recommend Suburbs</h3>
-                                <p>(Based on the given weight of featrues)</p>
-                                <div align='left' style='font-size:20px'> <a id = 'top1' onclick='refreshPage(". 1 .")'></a></div><br>
-                                <div align='left' style='font-size:20px'> <a id = 'top2' onclick='refreshPage(". 2 .")'></a></div><br>
-                                <div align='left' style='font-size:20px'> <a id = 'top3' onclick='refreshPage(". 3 .")'></a></div><br>
-                                <div align='left' style='font-size:20px'> <a id = 'top4' onclick='refreshPage(". 4 .")'></a></div><br>
-                                <div align='left' style='font-size:20px'> <a id = 'top5' onclick='refreshPage(". 5 .")'></a></div>
+                                <ul>
+                                    <li><h3 style='margin-top:10px;'>Top 5 recommended Suburbs</h3><p>(Based on the given weight of featrues)</p></li>
+
+                                    <li class='rating'>
+
+                                <div align='left' style='font-size:20px; padding:6px 0px 6px 0px'> <a id = 'top1' onclick='refreshPage('. 1 .')'></a></div>
+                                <div align='left' style='font-size:20px; padding:6px 0px 6px 0px'> <a id = 'top2' onclick='refreshPage('. 2 .')'></a></i></span></div>
+                                <div align='left' style='font-size:20px; padding:6px 0px 6px 0px'> <a id = 'top3' onclick='refreshPage('. 3 .')'></a></i></span></div>
+                                <div align='left' style='font-size:20px; padding:6px 0px 6px 0px'> <a id = 'top4' onclick='refreshPage('. 4 .')'></a></div>
+                                <div align='left' style='font-size:20px; padding:6px 0px 6px 0px'> <a id = 'top5' onclick='refreshPage('. 5 .')'></a></div>
+
+                                </li>
+                                </ul>
                             </div>
                         </div>";
                 }else{
@@ -245,10 +279,10 @@
                         echo "
                         <div class='col-xs-12 col-sm-3 col-md-3 wow fadeInUp'>
                             <div class='counter-item' style='height: 400px;'>
-                                <i class='fa fa-code'></i>
-                                <h3>". $value ."</h3>
+                                <i class='fa fa-user-secret'></i>
+                                <h3 style='margin-top:10px;'>". $value ."</h3>
                                 <p><br></p>
-                                <p id='crDetail' align='left' style='font-size:20px'></p>
+                                <p id='crDetail' align='left' style='font-size:20px'></p><div id='crStars' class='rating' align = 'left'></div>
                             </div>
                         </div>";
                     }else{
@@ -256,10 +290,10 @@
                             echo "
                         <div class='col-xs-12 col-sm-3 col-md-3 wow fadeInUp' data-wow-duration='2s' data-wow-delay='300ms'>
                             <div class='counter-item' style='height: 400px;'>
-                                <i class='fa fa-male'></i>
-                                <h3>". $value ."</h3>
+                                <i class='fa fa-users'></i>
+                                <h3 style='margin-top:10px;'>". $value ."</h3>
                                 <p><br></p>
-                                <p id='popDetail' align='left' style='font-size:20px'></p>
+                                <p id='popDetail' align='left' style='font-size:20px'></p><div id='popStars' class='rating' align = 'left'></div>
                             </div>
                         </div>";
                         }else{
@@ -270,30 +304,32 @@
                                         <i class='fa fa-diamond'></i>
                                         <h3>". $value ."</h3>
                                         <p><br></p>
-                                        <p id='prDetail' align='left' style='font-size:20px'></p>
+                                        <p id='prDetail' align='left' style='font-size:20px'></p><div id='prStars' class='rating' align = 'left'></div>
                                     </div>
                                 </div>";
                             }
                         }
                     }
                 }
-                ?>
+            ?>
+        </div>
+      </div>
     </section>
     <!-- End Abstract Section -->
 
     <!-- Start Diagram Section -->
     <section id="pricing-section" class="pricing-section">
-        <div class="container">
-            <div class="row">
-                <div class="col-md-12">
-                    <div class="section-title text-center wow fadeInDown" data-wow-duration="2s" data-wow-delay="50ms">
-                        <h2>Data Analyze (2012-2015)</h2>
-                    </div>
-                </div>
+      <div class="container">
+        <div class="row">
+          <div class="col-md-12">
+            <div class="section-title text-center wow fadeInDown" data-wow-duration="2s" data-wow-delay="50ms">
+              <h2>Data Analysis from 2012 to 2015</h2>
             </div>
-            <div class="row">
-                <div class="row" style="clear: both">
-                    <?php
+          </div>
+        </div>
+        <div class="row">
+          <div class="row" style="clear: both">
+            <?php
                             $ranges = explode('&', $_SERVER['REQUEST_URI']);
                             unset($ranges[0]);
                             $features = [];
@@ -331,46 +367,113 @@
                                             <div id='chart' style='width:100%;height:400px;'></div>
                                     </div>
                                     ";
-                            }else{
+                                    
+                            }
+                            else{
                                 echo"<h3 align='center'>Sorry, since you rate all environment features as 0, we have no data to show here.</h3>";
                             }
+                            
+                            
                     ?>
-                </div>
-            </div>
+          </div>
         </div>
+      </div>
     </section>
     <!-- End Diagram Section -->
 
-    <!-- Start Copyright Section -->
+    <!-- Start Footer Section -->
+    <section id="footer-section" class="footer-section">
+      <div class="container">
+        <div class="row">
+          <div class="col-md-3">
+            <div class="section-heading-2">
+              <h3 class="section-title">
+                <span>Office Address</span>
+              </h3>
+            </div>
+
+            <div class="footer-address">
+              <ul>
+                <li class="footer-contact">
+                  <i class="fa fa-home"></i>Monash University, Caulfield Campus
+                  900 Dandenong Rd
+                  Caulfield East VIC 3145
+                  Australia
+                </li>
+                <li class="footer-contact">
+                  <i class="fa fa-envelope"></i>
+                  <a href="#">atar15@student.monash.edu</a>
+                </li>
+                <li class="footer-contact">
+                  <i class="fa fa-phone"></i>0470 060 868
+                </li>
+
+              </ul>
+            </div>
+          </div>
+          <!--/.col-md-3 -->
+
+
+          <div class="col-md-3">
+            <div class="section-heading-2">
+              <h3 class="section-title">
+                <span>Latest Tweet</span>
+              </h3>
+            </div>
+
+            <div class="latest-tweet">
+              <div class="media">
+                <div class="media-left">
+                  <i class="fa fa-twitter fa-2x media-object"></i>
+                </div>
+                <div class="media-body">
+                  <h4 class="media-heading">About 15 days ago</h4>
+                  <p>Finally the #website is here to provide you what we promised ;)</p>
+                </div>
+              </div>
+            </div>
+          </div>
+
+        </div>
+        <!--/.row -->
+      </div>
+      <!-- /.container -->
+    </section>
+    <!-- End Footer Section -->
+
+    <!-- Start CCopyright Section -->
     <div id="copyright-section" class="copyright-section">
-        <div class="container">
-            <div class="row">
-                <div class="col-md-7">
-                    <div class="copyright">
-                        Copyright © 2016. All Rights Reserved by
-                        <a href="http://www.neighbourgood.tk">Neighbourgood</a>
-                    </div>
-                </div>
+      <div class="container">
+        <div class="row">
+          <div class="col-md-7">
+            <div class="copyright">
+              Copyright © 2016. All Rights Reserved by <span style="color: green">NIRVANA</span>
+            </div>
+          </div>
 
-                <div class="col-md-5">
-                    <div class="copyright-menu pull-right">
-                        <ul>
-                            <li>
-                                <a href="../../index.html" class="active">Home</a>
-                            </li>
-                        </ul>
-                    </div>
-                </div>
-            </div><!--/.row -->
-        </div><!-- /.container -->
+          <div class="col-md-5">
+            <div class="copyright-menu pull-right">
+              <ul>
+                <li>
+                  <a href="#" class="active">Home</a>
+                </li>
+                <!--<li><a href="#">Sample Site</a></li>
+                            <li><a href="#">getbootstrap.com</a></li>-->
+              </ul>
+            </div>
+          </div>
+        </div>
+        <!--/.row -->
+      </div>
+      <!-- /.container -->
     </div>
-    <!-- End Copyright Section -->
+    <!-- End CCopyright Section -->
 
 
 
-        <!--row 2 charts-->
+    <!--row 2 charts-->
 
-        <div id="test" style="display:none;"></div>
-</body>
+    <div id="test" style="display:none;"></div>
+  </body>
 </html>
 

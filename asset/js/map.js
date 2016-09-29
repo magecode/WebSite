@@ -30,7 +30,14 @@
 							},
 							overviewMapControl: true,	
 						};
-						
+						options = $.extend({
+						    scrollwheel: false,
+						    navigationControl: false,
+						    mapTypeControl: false,
+						    scaleControl: false,
+						    draggable: false,
+						    mapTypeId: google.maps.MapTypeId.ROADMAP
+						}, options);
 						var map = new google.maps.Map(element[0], options);
 						
 						var icon = { 

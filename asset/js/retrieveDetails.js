@@ -1,4 +1,4 @@
-﻿//get range value
+﻿//retreive figurs from DB and process
 function retrieveDetail() {
     var query = window.location.search.substring(1);
     var parameters = query.split("&");
@@ -24,6 +24,7 @@ function retrieveDetail() {
         }
     }
 
+    //using AJAX to connect to DB
     var xhttp;
     xhttp = new XMLHttpRequest();
     xhttp.onreadystatechange = function () {
@@ -38,6 +39,7 @@ function retrieveDetail() {
                     var text = "Crime Figure: " + crimes[1] + "<br>"
                                 + "Level: " + rate;
                     document.getElementById("crDetail").innerHTML = text;
+                    drawStars("crStars", crimes[2]);
                 } else if (details[i].match(/pop/g) != null) {
                     var populations = details[i].split(",");
                     var rate = lvToWord(populations[4], "population");
@@ -46,20 +48,41 @@ function retrieveDetail() {
                                 + "Population Density: " + populations[3] + "<br>"
                                 + "Level: " + rate;
                     document.getElementById("popDetail").innerHTML = text;
+                    drawStars("popStars", populations[4]);
                 } else if (details[i].match(/pr/g) != null) {
                     var prices = details[i].split(",");
                     var rate = lvToWord(prices[2], "price");
-                    var text = "Average House Price: " + prices[1] + "$<br>"
+                    var text = "Average House Price: $" + prices[1] + "<br>"
                                 + "Level: " + rate;
                     document.getElementById("prDetail").innerHTML = text;
-                    
+                    drawStars("prStars", prices[2]);
                 }
             }
+
+            //give empty result a meaningful output
+            validateResult();
         }
     };
 
     xhttp.open("GET", "details.php?prFlag=" + prFlag + "&popFlag=" + popFlag + "&crFlag=" + crFlag + "&suburb=" + suburbName, true);
     xhttp.send();
+}
+
+function validateResult() {
+    if (document.getElementById("crDetail").innerHTML == "") {
+        var text = "Sorry, no data can be retrieved.";
+        document.getElementById("crDetail").innerHTML = text;
+    }
+
+    if (document.getElementById("popDetail").innerHTML == "") {
+        var text = "Sorry, no data can be retrieved.";
+        document.getElementById("popDetail").innerHTML = text;
+    }
+
+    if (document.getElementById("prDetail").innerHTML == "") {
+        var text = "Sorry, no data can be retrieved.";
+        document.getElementById("prDetail").innerHTML = text;
+    }
 }
 
 function lvToWord(lv, feature) {
@@ -99,4 +122,26 @@ function lvToWord(lv, feature) {
     }
 
     return text;
+}
+
+function drawStars(element, level) {
+    var stars = "";
+    switch (level) {
+        case "1":
+            stars = "<span class='active'><i class='fa fa-star-o'></i></span><span><i class='fa fa-star-o'></i></span><span><i class='fa fa-star-o'></i></span><span><i class='fa fa-star-o'></i></span>";
+            break;
+        case "2":
+            stars = "<span class='active'><i class='fa fa-star-o'></i></span><span class='active'><i class='fa fa-star-o'></i></span><span><i class='fa fa-star-o'></i></span><span><i class='fa fa-star-o'></i></span>";
+            break;
+        case "3":
+            stars = "<span class='active'><i class='fa fa-star-o'></i></span><span class='active'><i class='fa fa-star-o'></i></span><span class='active'><i class='fa fa-star-o'></i></span><span><i class='fa fa-star-o'></i></span>";;
+            break;
+        case "4":
+            stars = "<span class='active'><i class='fa fa-star-o'></i></span><span class='active'><i class='fa fa-star-o'></i></span><span class='active'><i class='fa fa-star-o'></i></span><span class='active'><i class='fa fa-star-o'></i></span>";;
+            break;
+        default:
+            break;
+    }
+
+    document.getElementById(element).innerHTML = stars;
 }

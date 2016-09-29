@@ -4,8 +4,14 @@
 <html lang="en">
 
 <head>
-    <!-- Clear Cache-->
+    <!-- Clear Cache -->
     <meta http-equiv="Cache-control" content="no-cache">
+
+    <!-- Expire Cache -->
+    <meta http-equiv="expires" content="0"> 
+
+    <!-- Not Use Cache -->
+    <meta http-equiv="pragma" content="no-cache">
 
     <!-- Basic -->
     <title>Neighbourgood | Home</title>
@@ -45,81 +51,118 @@
 
 
     <script src="asset/js/modernizrr.js"></script>
-	
-	<script type="text/javascript" src="http://maps.googleapis.com/maps/api/js?key=AIzaSyCcvtV_71ZGFAUUcS9_u_D1ZFHi2BWLjao&signed_in=true&libraries=places"></script>
-	<script type="text/javascript" src="asset/js/validation.js"></script>
+
+    <script type="text/javascript" src="http://maps.googleapis.com/maps/api/js?key=AIzaSyCcvtV_71ZGFAUUcS9_u_D1ZFHi2BWLjao&signed_in=true&libraries=places"></script>
+    <script type="text/javascript" src="asset/js/validation.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+
+    <script>
+        //force the page refresh when back from browser back button
+        $(document).ready(function (e) {
+            var $input = $('#refresh');
+
+            $input.val() == 'yes' ? location.reload(true) : $input.val('yes');
+        });
+    </script>
 
 
 
-
-	<script>
-		//this function is used for auto fullfill search box
+    <script>
+        //this function is used for auto fullfill search box
         function autoCompleteSearch() {
-			var defaultBounds = new google.maps.LatLngBounds(
+            var defaultBounds = new google.maps.LatLngBounds(
 					new google.maps.LatLng(-38.073926, 144.359598),
 					new google.maps.LatLng(-37.620642, 145.612040)
 					);
 
-			var input = /** @type {!HTMLInputElement} */(
+            var input = /** @type {!HTMLInputElement} */(
 					document.getElementById('suburb'));
 
-			var options = {
-				bounds: defaultBounds
-			}
+            var options = {
+                bounds: defaultBounds
+            }
 
-			var autocomplete = new google.maps.places.Autocomplete(input, options);
-		}
+            var autocomplete = new google.maps.places.Autocomplete(input, options);
+        }
 
-		//google.maps.event.addDomListener(window, 'load', autoCompleteSearch);
-	</script>
+        //google.maps.event.addDomListener(window, 'load', autoCompleteSearch);
+    </script>
 
+    <script>
+        function fillSearch(obj) {
+            var text = document.getElementById(obj.id).innerHTML
+            document.getElementById("suburb").value = text + ", Victoria, Australia";
+        }
+    </script>
 
     <style>
-        th {          
+       
+   
+        th {
             text-align: center;
             font-size: 24px;
             color: lightseagreen;
             padding: 6px 2px 2px 6px;
-
+            width: 100%;
         }
 
         td {
             padding: 6px 2px 2px 6px;
             padding-top: 10px;
             padding-bottom: 10px;
-            text-align: center;
-            
         }
 
-        .search-override{
+        .search-override {
             line-height: 45px;
             width: 500px;
-            color: black;
         }
 
-        .img {
-           width:70% !important;
-           background-color:black;
-
-        }
-   
-        .slider-table input{
-            width: 100px;
+        .img-td {
+            width: 64px;
+            background-color: black;
         }
 
-        .text-td td{
+        .slider-table input[type=range] {
+            width: 150px;
+        }
+
+        input[type="checkbox"] {
+            width: 18px;
+            height: 18px;
+        }
+
+        .text-td td {
             font-size: 20px;
         }
 
+        .attributeTable {
+            width: 78%;
+            table-layout: auto;
+        }
 
+            .attributeTable tr th, td {
+                overflow: hidden;
+            }
+
+        .t2 tr:nth-child(2) td:first-child {
+            padding-top: 30px;
+        }
+
+        .t2 tr td:nth-child(2) {
+            vertical-align: bottom;
+        }
     </style>
- 
+
+
+
+
 
 </head>
 
 <body>
-
-
+    
+    <!-- Refresh indicator -->
+    <input type="hidden" id="refresh" value="no">
     <header class="clearfix">
 
         <!-- Start Top Bar -->
@@ -132,48 +175,15 @@
                             <div class="col-md-6">
                                 <!-- Start Contact Info -->
                                 <ul class="contact-details">
+                                   
                                     <li>
-                                        <a href="#"><i class="fa fa-phone"></i> 0470 060 868</a>
-                                    </li>
-                                    <li>
-                                        <a href="#"><i class="fa fa-envelope-o"></i> support@neighbourgood.com</a>
+                                        <i class="fa fa-envelope-o"></i> neighbourgood.nirvana@gmail.com
                                     </li>
                                 </ul>
                                 <!-- End Contact Info -->
                             </div><!-- .col-md-6 -->
 
                             <div class="col-md-6">
-                                <!-- Start Social Links
-                                <ul class="social-list">
-                                    <li>
-                                        <a href="#"><i class="fa fa-rss"></i></a>
-                                    </li>
-                                    <li>
-                                        <a href="#"><i class="fa fa-facebook"></i></a>
-                                    </li>
-                                    <li>
-                                        <a href="#"><i class="fa fa-twitter"></i></a>
-                                    </li>
-                                    <li>
-                                        <a href="#"><i class="fa fa-google-plus"></i></a>
-                                    </li>
-                                    <li>
-                                        <a href="#"><i class="fa fa-youtube"></i></a>
-                                    </li>
-                                    <li>
-                                        <a href="#"><i class="fa fa-linkedin"></i></a>
-                                    </li>
-                                    <li>
-                                        <a href="#"><i class="fa fa-flickr"></i></a>
-                                    </li>
-                                    <li>
-                                        <a href="#"><i class="fa fa-vimeo-square"></i></a>
-                                    </li>
-                                    <li>
-                                        <a href="#"><i class="fa fa-skype"></i></a>
-                                    </li>
-                                </ul>
-                                <!-- End Social Links -->
                             </div><!-- .col-md-6 -->
                         </div>
 
@@ -202,26 +212,9 @@
                         <li>
                             <a class="active" href="index.html">Home</a>
                         </li>
-                        <li>
-                            <a href="service.html">Your Target Location</a>
-                        </li>
+
                         <li>
                             <a href="about.html">About</a>
-                        </li>
-
-                        <!--<li>
-                            <a href="portfolio.html">Portfolio</a>
-                        </li>-->
-                        <!--<li>
-                            <a href="blog.html">Blog</a>
-                            <ul class="dropdown">
-                                <li>
-                                    <a href="blog-item.html">Item Page</a>
-                                </li>
-                            </ul>
-                        </li>-->
-                        <li>
-                            <a href="contact.html">Contact</a>
                         </li>
                     </ul>
                     <!-- End Navigation List -->
@@ -240,13 +233,14 @@
                 <div class="intro-text">
                     <h1>Welcome To <span>Neighbourgood</span></h1>
                     <p>We find the best liveable place for you <br>in MELBOURNE</p>
+                    <h5>( You can prioritize the environmental features below )</h5>
                     <form name="input" action="/asset/php/result.php" method="get" onsubmit="return validateForm(this)">
                         <div align="center">
                             <table style="width: 60%">
                                 <tr>
                                     <td>
 
-                                        <input style="width: 100%" class="search-override" type="text" size="60" name="suburb" id="suburb" placeholder="Please enter an address, suburb or post code" onclick="autoCompleteSearch()">
+                                        <input style="color:black; width: 100%" class="search-override" type="text" size="60" name="suburb" id="suburb" placeholder="Please enter an address, suburb or post code" onclick="autoCompleteSearch()">
 
                                     </td>
                                     <td>
@@ -255,72 +249,204 @@
                                 </tr>
                             </table>
                         </div>
+
                         <div class="row" style="width:60%;margin: auto">
                             <br />
 
-                            <div class="col-sm-6">
-                                <table class="slider-table text-td" style="width:100%">
+                            <div class="col-sm-8" style="overflow:hidden; min-width:426px">
+                                <table class="slider-table text-td attributeTable">
                                     <tr>
                                         <th></th>
-                                        <th style="background-color:black">Enviormental Features</th>
-                                        <th style="background-color:black">Your Priority</thstyle="background-color:black">
+                                        <th>Enviormental Features</th>
+                                        <th>Your Priority</th>
+                                        <th></th>
+                                    </tr>
+                                    <tr style='color:white;'>
+                                        <td style="text-align:right"><img style="cursor:help" class="img-td" src="asset/images/population.png" alt="This feature shows the population density in the target suburb"></td>
+                                        <td>Popuation Density</td>
+                                        <td id="slider-table"><input type="range" name="popRange" min="0" max="3" value="2" step="1" onchange="showValue1(this.value)" /></td>
+                                        <td><span id="range1">2</span></td>
+
 
                                     </tr>
                                     <tr style='color:white;'>
-                                        <td><img class="img"  src="asset/images/population.PNG" alt="..."></td>
-                                        <td >Popuation Density</td>
-                                        <td><input type="range" name="popRange" min="0" max="3" value="0" step="1" onchange="showValue1(this.value)" /></td>
-                                        <td><span id="range1">0</span></td>
-
-                                    </tr>
-                                    <tr style='color:white;'>
-                                        <td><img class="img" src="asset/images/crime.PNG" alt="..."></td>
+                                        <td style="text-align:right"><img style="cursor:help" class="img-td" src="asset/images/crime.PNG" alt="This feature shows number of commited crimes and status of crime in the target suburb"></td>
                                         <td>Crime Rate</td>
-                                        <td><input type="range" name="crRange" min="0" max="3" value="0" step="1" onchange="showValue2(this.value)" />
-                                        <td><span id="range2">0</span></td>
+                                        <td id="slider-table"><input type="range" name="crRange" min="0" max="3" value="2" step="1" onchange="showValue2(this.value)" />
+                                        <td><span id="range2">2</span></td>
+
+
                                     </tr>
                                     <tr style='color:white;'>
-                                        <td><img class="img" src="asset/images/price.PNG" alt="..."></td>
-                                        <td>Price Range</td>
-                                        <td><input type="range" name="prRange" min="0" max="3" value="0" step="1" onchange="showValue3(this.value)" />
-                                        <td><span id="range3">0</span></td>
+                                        <td style="text-align:right"><img style="cursor:help" class="img-td" src="asset/images/price.GIF" alt="This feature shows the median cost of buying a house or Unit in the target suburb"></td>
+                                        <td>Housing Cost</td>
+                                        <td id="slider-table"><input type="range" name="prRange" min="0" max="3" value="2" step="1" onchange="showValue3(this.value)" />
+                                        <td><span id="range3">2</span></td>
                                     </tr>
+
 
 
                                 </table>
                             </div>
-                            <div class="col-sm-3 text-td" style="float: right;width: auto !important">
-                                <table>
-                                    <tr style='color:white;'>
-                                        <th></th>
+                            <div class="col-sm-4">
+                                <table class="slider-table text-td attributeTable t2">
+                                    <tr>
                                         <th>Facility Nearby</th>
+                                        <th></th>
                                     </tr>
-                                    <tr>
-                                        <td align="left"><input type="checkbox" name="facilities" value="school"> </td>
+                                    <tr style='color:white;'>
                                         <td>Nearby Schools</td>
+                                        <td align="left"><input type="checkbox" name="facilities" value="school"> </td>
+
 
                                     </tr>
-                                    <tr>
-                                        <td align="left"><input type="checkbox" name="facilities" value="park"> </td>
+                                    <tr style='color:white;'>
                                         <td>Nearby Parks</td>
+                                        <td align="left"><input type="checkbox" name="facilities" value="park"></td>
+
+
                                     </tr>
-                                    <tr>
-                                        <td align="left"><input type="checkbox" name="facilities" value="hospital"></td>
+                                    <tr style='color:white;'>
                                         <td>Nearby Hospitals</td>
+                                        <td align="left"><input type="checkbox" name="facilities" value="hospital"></td>
                                     </tr>
 
                                 </table>
                             </div>
-
                         </div>
                     </form>
 
-  <!--<a href="#feature" class="page-scroll btn btn-primary">Read More</a>-->
+
                 </div>
             </div>
         </div>
     </div>
     <!-- End Header Section -->
+
+    <!-- Start Team Member Section -->
+    <section style="padding-top: 60px" id="team-section">
+        <div style="width: 70%" class="container">
+
+            <div class="row">
+                <div style="margin-bottom: 8px">
+                    <h2 style="text-align: center; margin-bottom: 15px">City of <span style="color: green; font-weight: bold">Melbourne</span> Regions</h2>
+                    <div>
+                        <p style="text-align: justify">
+                            The City of Melbourne municipality includes 15 suburbs that people from many cultures call home and where diverse private businesses and government organisations are located.
+                            Our 37.7 km2 municipality includes most of Melbourne's famous sporting venues and major parks and gardens.  The maps below are showing different regions of the City of Melbourne with a guideline.
+                            They help you to visualize this remarkable part of the Melbourne and give you some geographical information about:
+                            <ul style="list-style-type:disc">
+                                <li><b>Suburbs’ Boundary</b></li>
+                                <li><b>Public and Private Roads</b></li>
+                                <li><b>Tram and Train Railways</b></li>
+                                <li><b>Parks and Rivers</b></li>
+                            </ul>
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-8">
+                    <div>
+                        <img class="img-responsive" style="width: 100%" id="zoom_04b" src="asset/images/small/cityofmelbourne_boundarymap-S.JPG" data-zoom-image="asset/images/Large/cityofmelbourne_boundarymap-L.jpg" />
+
+                    </div>
+                    <div style="margin-top: 4px" class="flickr-widget">
+                        <ul class="flickr-list">
+                            <li>
+                                
+                                <img style="cursor:pointer" src="asset/images/Large/cityofmelbourne_boundarymap-L.jpg" alt="" class="img-responsive">
+                           
+                            </li>
+                            <li>
+                               
+                                <img style="cursor:pointer" src="asset/images/Large/carlton-nthmelb-parkville_2-L.JPG" alt="" class="img-responsive">
+                                
+                            </li>
+                            <li>
+
+                                <img style="cursor:pointer" src="asset/images/Large/docklands-westmelb-east-L.jpg" alt="" class="img-responsive">
+
+                            </li>
+                            <li>
+                                <img style="cursor:pointer" src="asset/images/Large/docklands-westmelb-west-L.JPG" alt="" class="img-responsive">
+                            </li>
+                            <li>
+                                <img style="cursor:pointer" src="asset/images/Large/eastmelb-jolimont-L.JPG" alt="" class="img-responsive">
+                            </li>
+                            <li>
+                                <img style="cursor:pointer" src="asset/images/Large/flemington-kensington08-L.JPG" alt="" class="img-responsive">
+                            </li>
+                            <li>
+                                <img style="cursor:pointer" src="asset/images/Large/melb3004-sthbank-sthyarra-sthwharf-L.JPG" alt="" class="img-responsive">
+                            </li>
+                            <li>
+                                <img style="cursor:pointer" src="asset/images/Large/portmelb-fishermans-L.jpg" alt="" class="img-responsive">
+                            </li>
+                        </ul>
+                    </div>
+
+                </div>
+                <div class="col-md-4">
+                    <div style="padding: 0px 2px 10px 10px">
+                        <h4 style="color: red; padding-bottom: 10px">Hints:</h4>
+                        <ul style="list-style-type:disc">
+                            <li>You can zoom in or zoom out with scrolling up or down on the map.</li>
+                            <li>The list of regions are provided by Figures and Names to be selected.</li>
+                        </ul>
+                    </div>
+
+                    <div style="padding: 30px 2px 10px 10px">
+                        <div style="padding-bottom: 50px">
+                            <h4 style="padding-bottom: 10px">Please Select a Region:</h4>
+
+                            <select id="select" style="width: 100%">
+                                <option value="1">City of Melbourne</option>
+                                <option value="2">Carlton 3053, Carlton North 3054, North Melbourne and Parkville 3052</option>
+                                <option value="3">Docklands & West Melbourne 3008 (East Section)</option>
+                                <option value="4">Docklands & West Melbourne 3003 (West Section)</option>
+                                <option value="5">East Melbourne and Jolimont 3002</option>
+                                <option value="6">Flemington and Kensington 3031</option>
+                                <option value="7">Melbourne 3004, Southbank 3006, South Wharf and South Yarra 3141</option>
+                                <option value="8">Port Melbourne and Fishermans Bend 3207</option>
+                            </select>
+                        </div>
+
+                        <div >
+                            <h4  style="padding-bottom: 5px">The most liveable suburbs:</h4>
+                            <h6 style="padding-bottom: 10px">( According to <a href="http://www.domain.com.au/news/melbournes-most-liveable-suburbs-ranked-20151106-gkskmc/">Domain.com.au</a> ) survey</h6>
+                            <ul >
+                                <li><a href="#" id="1" onclick="fillSearch(this)">East Melbourne</a></li>
+                                <li><a href="#" id="2" onclick="fillSearch(this)">South Yarra</a></li>
+                                <li><a href="#" id="3" onclick="fillSearch(this)">Toorak</a></li>
+                                <li><a href="#" id="4" onclick="fillSearch(this)">Armadale</a></li>
+                                <li><a href="#" id="5" onclick="fillSearch(this)">Melbourne</a></li>
+                                <li><a href="#" id="6" onclick="fillSearch(this)">Elsternwick</a></li>
+                                <li><a href="#" id="7" onclick="fillSearch(this)">Albert Park</a></li>
+                                <li><a href="#" id="8" onclick="fillSearch(this)">Ivanhoe</a></li>
+                                <li><a href="#" id="9" onclick="fillSearch(this)">Parkville</a></li>
+                                <li><a href="#" id="10" onclick="fillSearch(this)">North Melbourne</a></li>
+                                <li><a href="#" id="11" onclick="fillSearch(this)">Clifton Hill</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- End Team Member Section -->
+    <!-- Start Call to Action Section -->
+    <section class="call-to-action">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12 wow zoomIn" data-wow-duration="2s" data-wow-delay="300ms">
+                    <p>Melbourne is the world's most liveable city for a sixth consecutive year, according to the Economist Intelligence Unit (EIU)</p>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- End Call to Action Section -->
     <!-- Start About Us Section -->
     <section id="about-section" class="about-section">
         <div class="container">
@@ -334,10 +460,10 @@
             <div class="row">
                 <div class="col-md-5">
                     <div class="about-img">
-                        <img src="asset/images/corporate1.jpg" class="img-responsive" alt="About images">
+                        <img src="asset/images/vu-tower.jpg" class="img-responsive">
                         <div class="head-text">
-                            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec iaculis metus vitae ligula elementum ut luctus lorem facilisis.</p>
-                            <span>CEO, Themebean</span>
+                            <p>Finding High-Quality and Affordable living places within Melbourne</p>
+                            <span>Neighbourgood, Nirvana</span>
                         </div>
                     </div>
                 </div>
@@ -356,20 +482,21 @@
                     <div class="about-list">
                         <h4>Current Important Features</h4>
                         <ul>
-                            <li><i class="fa fa-check-square"></i>Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium.</li>
-                            <li><i class="fa fa-check-square"></i>Lorem ipsum dolor sit amet, consectetur adipiscing adipiscing.</li>
-                            <li><i class="fa fa-check-square"></i>Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusan.</li>
-                            <li><i class="fa fa-check-square"></i>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</li>
-                            <li><i class="fa fa-check-square"></i>Sed ut perspiciatis unde omnis iste natus error sit voluptatem.</li>
-                            <li><i class="fa fa-check-square"></i>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</li>
+                            <li><i class="fa fa-check-square"></i>Search based on population growth or reduction, crime rate and price average.</li>
+                            <li><i class="fa fa-check-square"></i>Showing the nearby facilities including schools, parks, and hospitals.</li>
+                            <li><i class="fa fa-check-square"></i>Top 5 ranking estimated by user's priorities</li>
+                            <li><i class="fa fa-check-square"></i>A comparison presented by charts from 2012 to 2015</li>
+                            <li><i class="fa fa-check-square"></i>A simple grade representing population density or crime rate</li>
+
                         </ul>
 
                         <h4>Coming Features</h4>
                         <ul>
-                            <li><i class="fa fa-check-square"></i>Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium.</li>
-                            <li><i class="fa fa-check-square"></i>Lorem ipsum dolor sit amet, consectetur adipiscing adipiscing.</li>
-                            <li><i class="fa fa-check-square"></i>Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusan.</li>
-                            <li><i class="fa fa-check-square"></i>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</li>
+                            <li><i class="fa fa-check-square"></i>Adding more environmental features such as noise pollution and water quality.</li>
+                            <li><i class="fa fa-check-square"></i>Adding more facilities nearby.</li>
+                            <li><i class="fa fa-check-square"></i>A prediction functionality for population in the next 10 years in major regions</li>
+                            <li><i class="fa fa-check-square"></i>More flexibility on the search box to achieve the best result according to user's preferences.</li>
+
                         </ul>
                     </div>
 
@@ -380,291 +507,41 @@
             </div>
         </div>
     </section>
-
-
-    <!-- Start Call to Action Section -->
-    <section class="call-to-action">
-        <div class="container">
-            <div class="row">
-                <div class="col-md-12 wow zoomIn" data-wow-duration="2s" data-wow-delay="300ms">
-                    <p>Awesome Aires Template is ready for <br> Business, Agency, Landing or Creative Portfolio<br>Aires is Responsive and help you to grow your business</p>
-                </div>
-            </div>
-        </div>
-    </section>
-    <!-- End Call to Action Section -->
-    <!-- Start Team Member Section -->
-    <section id="team-section">
-        <div class="container">
-            <div class="row">
-                <div class="col-md-12">
-                    <div class="section-title text-center wow fadeInDown" data-wow-duration="2s" data-wow-delay="50ms">
-                        <h2>Our Team</h2>
-                        <p>Duis aute irure dolor in reprehenderit in voluptate</p>
-                    </div>
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-md-3 wow fadeInLeft" data-wow-duration="2s" data-wow-delay="300ms">
-                    <div class="team-member">
-                        <img src="asset/images/team/team-1.jpg" class="img-responsive" alt="">
-                        <div class="team-details">
-                            <h4>John Doe</h4>
-                            <p>Founder & Director</p>
-                            <ul>
-                                <li><a href="#"><i class="fa fa-facebook"></i></a></li>
-                                <!--<li><a href="#"><i class="fa fa-twitter"></i></a></li>
-                                <li><a href="#"><i class="fa fa-linkedin"></i></a></li>
-                                <li><a href="#"><i class="fa fa-pinterest"></i></a></li>
-                                <li><a href="#"><i class="fa fa-dribbble"></i></a></li>-->
-                            </ul>
-                        </div>
-                    </div>
-                </div><!-- /.col-md-3 -->
-                <div class="col-md-3 wow fadeInLeft" data-wow-duration="2s" data-wow-delay="600ms">
-                    <div class="team-member">
-                        <img src="asset/images/team/team-2.jpg" class="img-responsive" alt="">
-                        <div class="team-details">
-                            <h4>John Doe</h4>
-                            <p>Founder & Director</p>
-                            <ul>
-                                <li><a href="#"><i class="fa fa-facebook"></i></a></li>
-                                <!--<li><a href="#"><i class="fa fa-twitter"></i></a></li>
-                                <li><a href="#"><i class="fa fa-linkedin"></i></a></li>
-                                <li><a href="#"><i class="fa fa-pinterest"></i></a></li>
-                                <li><a href="#"><i class="fa fa-dribbble"></i></a></li>-->
-                            </ul>
-                        </div>
-                    </div>
-                </div><!-- /.col-md-3 -->
-                <div class="col-md-3 wow fadeInLeft" data-wow-duration="2s" data-wow-delay="900ms">
-                    <div class="team-member">
-                        <img src="asset/images/team/team-3.jpg" class="img-responsive" alt="">
-                        <div class="team-details">
-                            <h4>John Doe</h4>
-                            <p>Founder & Director</p>
-                            <ul>
-                                <li><a href="#"><i class="fa fa-facebook"></i></a></li>
-                                <!--<li><a href="#"><i class="fa fa-twitter"></i></a></li>
-                                <li><a href="#"><i class="fa fa-linkedin"></i></a></li>
-                                <li><a href="#"><i class="fa fa-pinterest"></i></a></li>
-                                <li><a href="#"><i class="fa fa-dribbble"></i></a></li>-->
-                            </ul>
-                        </div>
-                    </div>
-                </div><!-- /.col-md-3 -->
-                <div class="col-md-3 wow fadeInLeft" data-wow-duration="2s" data-wow-delay="1200ms">
-                    <div class="team-member">
-                        <img src="asset/images/team/team-4.jpg" class="img-responsive" alt="">
-                        <div class="team-details">
-                            <h4>John Doe</h4>
-                            <p>Founder & Director</p>
-                            <ul>
-                                <li><a href="#"><i class="fa fa-facebook"></i></a></li>
-                                <!--<li><a href="#"><i class="fa fa-twitter"></i></a></li>
-                                <li><a href="#"><i class="fa fa-linkedin"></i></a></li>
-                                <li><a href="#"><i class="fa fa-pinterest"></i></a></li>
-                                <li><a href="#"><i class="fa fa-dribbble"></i></a></li>-->
-                            </ul>
-                        </div>
-                    </div>
-                </div><!-- /.col-md-3 -->
-            </div>
-        </div>
-    </section>
-    <!-- End Team Member Section -->
-    <!-- Start Portfolio Section
-    <section id="portfolio" class="portfolio-section-1">
-        <div class="container">
-            <div class="row">
-                <div class="col-md-12">
-                    <div class="section-title text-center wow fadeInDown" data-wow-duration="2s" data-wow-delay="50ms">
-                        <h2>Our Portfolio</h2>
-                        <p>Duis aute irure dolor in reprehenderit in voluptate</p>
-                    </div>
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-md-12">
-
-                    <!-- Start Portfolio items
-                    <ul id="portfolio-list">
-                        <li class="wow fadeInLeft" data-wow-duration="2s" data-wow-delay="300ms">
-                            <div class="portfolio-item">
-                                <img src="asset/images/portfolio/img1.jpg" class="img-responsive" alt="" />
-                                <div class="portfolio-caption">
-                                    <h4>Portfolio Title</h4>
-                                    <p>At vero eos et accusamus et iusto odio dignissimos ducimus qui blanditiis praesentium</p>
-                                    <a href="#portfolio-modal" data-toggle="modal" class="link-1"><i class="fa fa-magic"></i></a>
-                                    <a href="#" class="link-2"><i class="fa fa-link"></i></a>
-                                </div>
-                            </div>
-                        </li>
-                        <li class="wow fadeInLeft" data-wow-duration="2s" data-wow-delay="600ms">
-                            <div class="portfolio-item">
-                                <img src="asset/images/portfolio/img2.jpg" class="img-responsive" alt="" />
-                                <div class="portfolio-caption">
-                                    <h4>Portfolio Title</h4>
-                                    <p>At vero eos et accusamus et iusto odio dignissimos ducimus qui blanditiis praesentium</p>
-                                    <a href="#portfolio-modal" data-toggle="modal" class="link-1"><i class="fa fa-magic"></i></a>
-                                    <a href="#" class="link-2"><i class="fa fa-link"></i></a>
-                                </div>
-                            </div>
-                        </li>
-                        <li class="wow fadeInLeft" data-wow-duration="2s" data-wow-delay="900ms">
-                            <div class="portfolio-item">
-                                <img src="asset/images/portfolio/img3.jpg" class="img-responsive" alt="" />
-                                <div class="portfolio-caption">
-                                    <h4>Portfolio Title</h4>
-                                    <p>At vero eos et accusamus et iusto odio dignissimos ducimus qui blanditiis praesentium</p>
-                                    <a href="#portfolio-modal" data-toggle="modal" class="link-1"><i class="fa fa-magic"></i></a>
-                                    <a href="#" class="link-2"><i class="fa fa-link"></i></a>
-                                </div>
-                            </div>
-                        </li>
-                        <li class="wow fadeInLeft" data-wow-duration="2s" data-wow-delay="1200ms">
-                            <div class="portfolio-item">
-                                <img src="asset/images/portfolio/img4.jpg" class="img-responsive" alt="" />
-                                <div class="portfolio-caption">
-                                    <h4>Portfolio Title</h4>
-                                    <p>At vero eos et accusamus et iusto odio dignissimos ducimus qui blanditiis praesentium</p>
-                                    <a href="#portfolio-modal" data-toggle="modal" class="link-1"><i class="fa fa-magic"></i></a>
-                                    <a href="#" class="link-2"><i class="fa fa-link"></i></a>
-                                </div>
-                            </div>
-                        </li>
-                        <li class="wow fadeInLeft" data-wow-duration="2s" data-wow-delay="1500ms">
-                            <div class="portfolio-item">
-                                <img src="asset/images/portfolio/img5.jpg" class="img-responsive" alt="" />
-                                <div class="portfolio-caption">
-                                    <h4>Portfolio Title</h4>
-                                    <p>At vero eos et accusamus et iusto odio dignissimos ducimus qui blanditiis praesentium</p>
-                                    <a href="#portfolio-modal" data-toggle="modal" class="link-1"><i class="fa fa-magic"></i></a>
-                                    <a href="#" class="link-2"><i class="fa fa-link"></i></a>
-                                </div>
-                            </div>
-                        </li>
-                        <li class="wow fadeInLeft" data-wow-duration="2s" data-wow-delay="1800ms">
-                            <div class="portfolio-item">
-                                <img src="asset/images/portfolio/img6.jpg" class="img-responsive" alt="" />
-                                <div class="portfolio-caption">
-                                    <h4>Portfolio Title</h4>
-                                    <p>At vero eos et accusamus et iusto odio dignissimos ducimus qui blanditiis praesentium</p>
-                                    <a href="#portfolio-modal" data-toggle="modal" class="link-1"><i class="fa fa-magic"></i></a>
-                                    <a href="#" class="link-2"><i class="fa fa-link"></i></a>
-                                </div>
-                            </div>
-                        </li>
-
-
-                    </ul>
-                    <!-- End Portfolio items
-                </div>
-            </div>
-        </div>
-    </section>
-    End Portfolio Section -->
-    <!-- Start Service Section
-    <section id="service-section">
-        <div class="container">
-            <div class="row">
-                <div class="col-md-12">
-                    <div class="section-title text-center wow fadeInDown" data-wow-duration="2s" data-wow-delay="50ms">
-                        <h2>Our Services</h2>
-                        <p>Duis aute irure dolor in reprehenderit in voluptate</p>
-                    </div>
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-md-3">
-                    <div class="services-post">
-                        <a href="#"><i class="fa fa-skyatlas"></i></a>
-                        <h2>RESPONSIVE DESIGN</h2>
-                        <p>Donec odio. Quisque volutpat mattis eros. Nullam malesuada </p>
-                    </div>
-                </div>
-                <div class="col-md-3">
-                    <div class="services-post">
-                        <a href="#"><i class="fa fa-magic"></i></a>
-                        <h2>RESPONSIVE DESIGN</h2>
-                        <p>Donec odio. Quisque volutpat mattis eros. Nullam malesuada </p>
-                    </div>
-                </div>
-                <div class="col-md-3">
-                    <div class="services-post">
-                        <a href="#"><i class="fa fa-gift"></i></a>
-                        <h2>RESPONSIVE DESIGN</h2>
-                        <p>Donec odio. Quisque volutpat mattis eros. Nullam malesuada </p>
-                    </div>
-                </div>
-                <div class="col-md-3">
-                    <div class="services-post">
-                        <a href="#"><i class="fa fa-diamond"></i></a>
-                        <h2>RESPONSIVE DESIGN</h2>
-                        <p>Donec odio. Quisque volutpat mattis eros. Nullam malesuada </p>
-                    </div>
-                </div>
-                <div class="col-md-3">
-                    <div class="services-post">
-                        <a href="#"><i class="fa fa-wordpress"></i></a>
-                        <h2>RESPONSIVE DESIGN</h2>
-                        <p>Donec odio. Quisque volutpat mattis eros. Nullam malesuada </p>
-                    </div>
-                </div>
-                <div class="col-md-3">
-                    <div class="services-post">
-                        <a href="#"><i class="fa fa-forumbee"></i></a>
-                        <h2>RESPONSIVE DESIGN</h2>
-                        <p>Donec odio. Quisque volutpat mattis eros. Nullam malesuada </p>
-                    </div>
-                </div>
-                <div class="col-md-3">
-                    <div class="services-post">
-                        <a href="#"><i class="fa fa-bicycle"></i></a>
-                        <h2>RESPONSIVE DESIGN</h2>
-                        <p>Donec odio. Quisque volutpat mattis eros. Nullam malesuada </p>
-                    </div>
-                </div>
-                <div class="col-md-3">
-                    <div class="services-post">
-                        <a href="#"><i class="fa fa-foursquare"></i></a>
-                        <h2>RESPONSIVE DESIGN</h2>
-                        <p>Donec odio. Quisque volutpat mattis eros. Nullam malesuada </p>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-     Start Service Section -->
+    <!-- End About Us Section -->
     <!-- Start Testimonial Section -->
     <section id="testimonial-section">
         <div class="container">
             <div class="row">
                 <div class="col-md-12">
+                    <div class="section-title text-center wow fadeInDown" data-wow-duration="2s" data-wow-delay="50ms">
+                        <h2 style="color: white">Nirvana Founders</h2>
+
+                    </div>
                     <div class="testimonial-wrapper">
                         <div class="testimonial-item">
-                            <p>Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo. </p>
-                            <img src="asset/images/team/team-1.jpg" alt="Testimonial images">
-                            <h5>John Doe</h5>
-                            <div class="desgnation">CEO, ThemeBean</div>
+
+                            <p></p>
+                            <img src="asset/images/team/team-1.jpg">
+                            <h5>Carol (Cuimin Li)</h5>
+                            <div class="desgnation">Document Support</div>
                         </div>
                         <div class="testimonial-item">
-                            <p>Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo.</p>
-                            <img src="asset/images/team/team-2.jpg" alt="Testimonial images">
-                            <h5>John Doe</h5>
-                            <div class="desgnation">CEO, ThemeBean</div>
+                            <p></p>
+                            <img src="asset/images/team/team-2.jpg">
+                            <h5>Ian (Haijiang Wang)</h5>
+                            <div class="desgnation">Developer</div>
                         </div>
                         <div class="testimonial-item">
-                            <p>Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo.</p>
-                            <img src="asset/images/team/team-3.jpg" alt="Testimonial images">
-                            <h5>John Doe</h5>
-                            <div class="desgnation">CEO, ThemeBean</div>
+                            <p></p>
+                            <img src="asset/images/team/team-3.jpg">
+                            <h5>Armin Taremi</h5>
+                            <div class="desgnation">Developer</div>
                         </div>
                         <div class="testimonial-item">
-                            <p>Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo.</p>
-                            <img src="asset/images/team/team-4.jpg" alt="Testimonial images">
-                            <h5>John Doe</h5>
-                            <div class="desgnation">CEO, ThemeBean</div>
+                            <p></p>
+                            <img src="asset/images/team/team-4.jpg">
+                            <h5>Yunanto Segara Putra</h5>
+                            <div class="desgnation">Data Analyser</div>
                         </div>
                     </div>
                 </div>
@@ -672,25 +549,21 @@
         </div>
     </section>
     <!-- End Testimonial Section -->
-    <!-- Start Client Section
-    <div id="client-section">
-        <div class="container">
-            <div class="row">
-                <div class="col-md-12">
-                    <div class="client-box">
-                        <ul class="client-list">
-                            <li><a href="#"><img src="asset/images/clients/client1.png" class="img-responsive" alt="Clients Logo"></a></li>
-                            <li><a href="#"><img src="asset/images/clients/client2.png" class="img-responsive" alt="Clients Logo"></a></li>
-                            <li><a href="#"><img src="asset/images/clients/client3.png" class="img-responsive" alt="Clients Logo"></a></li>
-                            <li><a href="#"><img src="asset/images/clients/client4.png" class="img-responsive" alt="Clients Logo"></a></li>
-                            <li><a href="#"><img src="asset/images/clients/client5.png" class="img-responsive" alt="Clients Logo"></a></li>
-                        </ul>
-                    </div>
-                </div>
-            </div>
+
+
+
+    <section id="contact" class="contact">
+        <div class="page-header">
+            <h1 align="center">
+                Contact Us
+            </h1>
         </div>
-    </div>
-    End Client Section -->
+        <div class="google-map">
+            <div id="map" data-position-latitude="-37.877107" data-position-longitude="145.044325"></div>
+        </div>
+    </section>
+
+
     <!-- Start Footer Section -->
     <section id="footer-section" class="footer-section">
         <div class="container">
@@ -710,9 +583,9 @@
                                 Caulfield East VIC 3145
                                 Australia
                             </li>
-                            <li class="footer-contact"><i class="fa fa-envelope"></i><a href="#">info@domain.com</a></li>
-                            <li class="footer-contact"><i class="fa fa-phone"></i>0470 060 868</li>
-                            <li class="footer-contact"><i class="fa fa-globe"></i><a href="#" target="_blank">www.domain.com</a></li>
+                            <li class="footer-contact"><i class="fa fa-envelope"></i><a href="#">neighbourgood.nirvana@gmail.com</a></li>
+                           
+
                         </ul>
                     </div>
                 </div><!--/.col-md-3 -->
@@ -721,6 +594,7 @@
                 <div class="col-md-3">
                     <div class="section-heading-2">
                         <h3 class="section-title">
+
                             <span>Latest Tweet</span>
                         </h3>
                     </div>
@@ -732,79 +606,12 @@
                             </div>
                             <div class="media-body">
                                 <h4 class="media-heading">About 15 days ago</h4>
-                                <p>Finally #tutsplus start a tutorial on A Beginner’s Guide to Using #joomla . Check it out here http://t.co/i6S4zeW8Z0</p>
+                                <p>Finally the #website is here to provide you what we promised ;)</p>
                             </div>
                         </div>
                     </div>
                 </div><!--/.col-md-3 -->
 
-                <div class="col-md-3">
-                    <div class="section-heading-2">
-                        <h3 class="section-title">
-                            <span>Stay With us</span>
-                        </h3>
-                    </div>
-                    <div class="subscription">
-                        <p>Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium.</p>
-                        <div class="form-group">
-                            <input type="text" class="form-control" placeholder="Your E-mail" id="name" required data-validation-required-message="Please enter your name.">
-                            <input type="submit" class="btn btn-primary" value="Subscribe">
-                        </div>
-                    </div>
-                </div>
-
-                <div class="col-md-3">
-                    <div class="section-heading-2">
-                        <h3 class="section-title">
-                            <span>FLICKR STREAM</span>
-                        </h3>
-                    </div>
-
-                    <div class="flickr-widget">
-                        <ul class="flickr-list">
-                            <li>
-                                <a href="asset/images/portfolio/img1.jpg" data-lightbox="picture-1">
-                                    <img src="asset/images/portfolio/img1.jpg" alt="" class="img-responsive">
-                                </a>
-                            </li>
-                            <li>
-                                <a href="asset/images/portfolio/img2.jpg" data-lightbox="picture-2">
-                                    <img src="asset/images/portfolio/img2.jpg" alt="" class="img-responsive">
-                                </a>
-                            </li>
-                            <li>
-                                <a href="asset/images/portfolio/img3.jpg" data-lightbox="picture-3">
-                                    <img src="asset/images/portfolio/img3.jpg" alt="" class="img-responsive">
-                                </a>
-                            </li>
-                            <li>
-                                <a href="asset/images/portfolio/img4.jpg" data-lightbox="picture-4">
-                                    <img src="asset/images/portfolio/img4.jpg" alt="" class="img-responsive">
-                                </a>
-                            </li>
-                            <li>
-                                <a href="asset/images/portfolio/img5.jpg" data-lightbox="picture-5">
-                                    <img src="asset/images/portfolio/img5.jpg" alt="" class="img-responsive">
-                                </a>
-                            </li>
-                            <li>
-                                <a href="asset/images/portfolio/img6.jpg" data-lightbox="picture-6">
-                                    <img src="asset/images/portfolio/img6.jpg" alt="" class="img-responsive">
-                                </a>
-                            </li>
-                            <li>
-                                <a href="asset/images/portfolio/img1.jpg" data-lightbox="picture-7">
-                                    <img src="asset/images/portfolio/img1.jpg" alt="" class="img-responsive">
-                                </a>
-                            </li>
-                            <li>
-                                <a href="asset/images/portfolio/img2.jpg" data-lightbox="picture-8">
-                                    <img src="asset/images/portfolio/img2.jpg" alt="" class="img-responsive">
-                                </a>
-                            </li>
-                        </ul>
-                    </div>
-                </div><!--/.col-md-3 -->
             </div><!--/.row -->
         </div><!-- /.container -->
     </section>
@@ -815,7 +622,7 @@
             <div class="row">
                 <div class="col-md-7">
                     <div class="copyright">
-                        Copyright © 2016. All Rights Reserved by <a href="http://www.neighbourgood.tk">Neighbourgood</a>
+                        Copyright © 2016. All Rights Reserved by <span style="color: green">NIRVANA</span>
                     </div>
                 </div>
 
@@ -823,15 +630,15 @@
                     <div class="copyright-menu pull-right">
                         <ul>
                             <li><a href="#" class="active">Home</a></li>
-                            <!--<li><a href="#">Sample Site</a></li>
-                            <li><a href="#">getbootstrap.com</a></li>-->
+
                         </ul>
                     </div>
                 </div>
             </div><!--/.row -->
         </div><!-- /.container -->
     </div>
-    <!-- End CCopyright Section -->
+
+
     <!-- Sulfur JS File -->
     <script src="asset/js/jquery-2.1.3.min.js"></script>
     <script src="asset/js/jquery-migrate-1.2.1.min.js"></script>
@@ -843,6 +650,12 @@
     <script src="asset/js/lightbox.min.js"></script>
     <script src="asset/js/count-to.js"></script>
     <script src="asset/js/styleswitcher.js"></script>
+    <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+    <!--img zoom-->
+    <script src="asset/js/jquery.elevateZoom-3.0.8.min.js"> </script>
+    <script src="asset/js/jquery.elevatezoom.js"> </script>
+    <!--img zoom-->
 
     <script src="asset/js/map.js"></script>
     <!--<script src="http://maps.googleapis.com/maps/api/js?sensor=false"></script>-->
@@ -860,7 +673,107 @@
         }
     </script>
 
-  
-    
+    <script>
+
+        $(document).ready(function () {
+
+            $(".flickr-widget img").click(function (event) {
+               
+                var title = $(this).attr("src");
+                var ez = $('#zoom_04b').data('elevateZoom');
+                var smallTitle = title.replace("-L.jpg", "-S.jpg");
+                smallTitle = smallTitle.replace("-L.JPG", "-S.jpg");
+                smallTitle = smallTitle.replace("Large", "small");
+                ez.swaptheimage(smallTitle, title);
+
+            });
+            $("#zoom_04b").elevateZoom({
+                scrollZoom: true,
+                gallery: "gallery_09",
+                galleryActiveClass: "active", zoomWindowPosition: 3, zoomWindowOffetx: 15
+            });
+
+
+            $("#select").change(function (e) {
+                var currentValue = $("#select").val();
+                if (currentValue == 1) {
+                    smallImage = 'asset/images/small/cityofmelbourne_boundarymap-S.jpg';
+                    largeImage = 'asset/images/Large/cityofmelbourne_boundarymap-L.jpg';
+                }
+                if (currentValue == 2) {
+                    smallImage = 'asset/images/small/carlton-nthmelb-parkville_2-S.jpg';
+                    largeImage = 'asset/images/Large/carlton-nthmelb-parkville_2-L.jpg';
+                }
+                if (currentValue == 3) {
+
+                    smallImage = 'asset/images/small/docklands-westmelb-east-S.jpg';
+                    largeImage = 'asset/images/Large/docklands-westmelb-east-L.jpg';
+                }
+                if (currentValue == 4) {
+                    smallImage = 'asset/images/small/docklands-westmelb-west-S.jpg';
+                    largeImage = 'asset/images/Large/docklands-westmelb-west-L.jpg';
+                }
+                if (currentValue == 5) {
+
+                    smallImage = 'asset/images/small/eastmelb-jolimont-S.jpg';
+                    largeImage = 'asset/images/Large/eastmelb-jolimont-L.jpg';
+                }
+                if (currentValue == 6) {
+
+                    smallImage = 'asset/images/small/flemington-kensington08-S.jpg';
+                    largeImage = 'asset/images/Large/flemington-kensington08-L.jpg';
+                }
+                if (currentValue == 7) {
+
+                    smallImage = 'asset/images/small/melb3004-sthbank-sthyarra-sthwharf-S.jpg';
+                    largeImage = 'asset/images/Large/melb3004-sthbank-sthyarra-sthwharf-L.jpg';
+                }
+                if (currentValue == 8) {
+
+                    smallImage = 'asset/images/small/portmelb-fishermans-S.jpg';
+                    largeImage = 'asset/images/Large/portmelb-fishermans-L.jpg';
+                }
+
+                //using Active Gallery
+                $('#gallery_09 a').removeClass('active').eq(currentValue - 1).addClass('active');
+
+
+                var ez = $('#zoom_04b').data('elevateZoom');
+
+                ez.swaptheimage(smallImage, largeImage);
+
+            });
+            
+            $("body").tooltip({
+                items: "img, [title]",
+                content: function() {
+                    var element = $( this );
+                   
+                    if ( element.is( "[title]" ) ) {
+                        return element.attr( "title" );
+                    }
+                    if ( element.is( "img" ) ) {
+                        return element.attr( "alt" );
+                    }
+                },
+                position: {
+                    my: "left-340 bottom+35",
+                    at: "center left",
+                    using: function (position, feedback) {
+                    
+                        $( this ).css( position );
+                        $( "<div>" )
+                          .addClass( "arrow" )
+                          .addClass( feedback.vertical )
+                          .addClass( feedback.horizontal )
+                          .appendTo( this );
+                    }
+                }
+            });
+        });
+
+    </script>
+
+
 </body>
 </html>

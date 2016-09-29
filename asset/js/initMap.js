@@ -68,11 +68,9 @@ function initialize() {
                 });
             } else {
                 alert("Please only input location within Melbourne.");
-                window.history.back();
             }
         } else {
-            alert("Please check your input, it should be either a suburb name.");
-            window.history.back();
+            alert("Please check your input, it should be either a suburb name or a post code.");
             //document.getElementById("googleMap").innerhtml = "Geocode was not successful for the following reason:";
         }			
     });
@@ -149,9 +147,22 @@ function callback(results, status) {
 }
 
 function createMarker(place) {
+    var icons = {
+        school: {
+            icon: '../images/marker/school.png'
+        },
+        park: {
+            icon: '../images/marker/park.png'
+        },
+        hospital: {
+            icon: '../images/marker/hospital.png'
+        }
+    };
+
     var placeLoc = place.geometry.location;
     var marker = new google.maps.Marker({
         map: map,
+        icon: icons[place.types[0]].icon,
         position: place.geometry.location
     });
 
