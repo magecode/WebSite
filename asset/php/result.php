@@ -71,21 +71,23 @@
     <script src="../js/map.js"></script>
     <script src="../js/script.js"></script>
     <script>
-      function refreshPage(id) {
-      var suburb = document.getElementById("top" + id).innerHTML;
+    function refreshPage(id) {
+        var suburb = document.getElementById("top" + id).innerHTML;
+        var query = window.location.search.substring(1);
+        alert(suburb);
+        var parameters = query.split("&");
+        parameters[0] = "suburb=" + suburb + "%2C+Victoria%2C+Australia";
+        var address = parameters[0].replace(/\s/g, "+");
+        alert(address);
+        for (i = 1; i <= parameters.length - 1; i++) {
+        address = address + "&" + parameters[i];
+    }
 
-      var query = window.location.search.substring(1);
-      //alert(query);
-      var parameters = query.split("&");
-      parameters[0] = "suburb=" + suburb + "%2C+Victoria%2C+Australia";
-      var address = parameters[0].replace(" ", "+");
-      for (i = 1; i <= parameters.length - 1; i++) {
-      address = address + "&" + parameters[i];
-      }
-      //alert(address);
-      //parameters[0] = "";
-      window.open("http://118.139.18.135/asset/php/result.php?" + address, "_self");
-      }
+    //alert(address);
+    //parameters[0] = "";
+    window.open("http://118.139.18.135/asset/php/result.php?" + address, "_self");
+      
+    }
 
     </script>
 
@@ -257,11 +259,11 @@
 
                                     <li class='rating'>
 
-                                <div align='left' style='font-size:20px; padding:6px 0px 6px 0px'> <a id = 'top1' onclick='refreshPage('. 1 .')'></a></div>
-                                <div align='left' style='font-size:20px; padding:6px 0px 6px 0px'> <a id = 'top2' onclick='refreshPage('. 2 .')'></a></i></span></div>
-                                <div align='left' style='font-size:20px; padding:6px 0px 6px 0px'> <a id = 'top3' onclick='refreshPage('. 3 .')'></a></i></span></div>
-                                <div align='left' style='font-size:20px; padding:6px 0px 6px 0px'> <a id = 'top4' onclick='refreshPage('. 4 .')'></a></div>
-                                <div align='left' style='font-size:20px; padding:6px 0px 6px 0px'> <a id = 'top5' onclick='refreshPage('. 5 .')'></a></div>
+                                <div align='left' style='font-size:20px; padding:6px 0px 6px 0px'> <a id = 'top1' onclick='refreshPage(1)'></a></div>
+                                <div align='left' style='font-size:20px; padding:6px 0px 6px 0px'> <a id = 'top2' onclick='refreshPage(2)'></a></i></span></div>
+                                <div align='left' style='font-size:20px; padding:6px 0px 6px 0px'> <a id = 'top3' onclick='refreshPage(3)'></a></i></span></div>
+                                <div align='left' style='font-size:20px; padding:6px 0px 6px 0px'> <a id = 'top4' onclick='refreshPage(4)'></a></div>
+                                <div align='left' style='font-size:20px; padding:6px 0px 6px 0px'> <a id = 'top5' onclick='refreshPage(5)'></a></div>
 
                                 </li>
                                 </ul>
@@ -468,10 +470,6 @@
       <!-- /.container -->
     </div>
     <!-- End CCopyright Section -->
-
-
-
-    <!--row 2 charts-->
 
     <div id="test" style="display:none;"></div>
   </body>
