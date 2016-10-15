@@ -49,7 +49,7 @@
     <script src="../js/jquery.min.js" type="text/javascript"></script>
     <script src="../js/plotly-latest.min.js" type="text/javascript"></script>
     <script src="../js/drawChart.js"></script>
-    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCcvtV_71ZGFAUUcS9_u_D1ZFHi2BWLjao&libraries=places"></script>
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCcvtV_71ZGFAUUcS9_u_D1ZFHi2BWLjao&language=en-AU&region=AU&libraries=places"></script>
     <script src="../js/processTop.js" type="text/javascript"></script>
     <script src="../js/initMap.js"></script>
     <script src="../js/retrieveDetails.js" type="text/javascript"></script>
@@ -74,20 +74,17 @@
     function refreshPage(id) {
         var suburb = document.getElementById("top" + id).innerHTML;
         var query = window.location.search.substring(1);
-        alert(suburb);
         var parameters = query.split("&");
         parameters[0] = "suburb=" + suburb + "%2C+Victoria%2C+Australia";
         var address = parameters[0].replace(/\s/g, "+");
-        alert(address);
         for (i = 1; i <= parameters.length - 1; i++) {
         address = address + "&" + parameters[i];
     }
 
-    //alert(address);
-    //parameters[0] = "";
-    window.open("http://118.139.18.135/asset/php/result.php?" + address, "_self");
+    window.open("http://neighbourgood.tk/asset/php/result.php?" + address, "_self");
       
     }
+
 
     </script>
 
@@ -101,9 +98,15 @@
       background: none !important;
       padding: 0 !important;
       }
+
       .active i
       {
       color: #FFD700;
+      }
+
+      @media all and (max-width: 1000px) { /* screen size until 1000px */
+      .counter-item {
+      height: 480px !important;
       }
     </style>
   </head>
@@ -124,14 +127,10 @@
                 <div class="col-md-6">
                   <!-- Start Contact Info -->
                   <ul class="contact-details">
+
                     <li>
 
-                      <i class="fa fa-phone"></i> 0470 060 868
-
-                    </li>
-                    <li>
-
-                      <i class="fa fa-envelope-o"></i> atar15@student.monash.edu
+                      <i class="fa fa-envelope-o"></i> neighbourgood.nirvana@gmail.com
 
                     </li>
                   </ul>
@@ -172,9 +171,6 @@
               <li>
                 <a href="../../about.html">About</a>
               </li>
-              <!--<li>
-                            <a href="../../contact.html">Contact</a>
-                        </li>-->
             </ul>
             <!-- End Navigation List -->
           </div>
@@ -240,11 +236,11 @@
                     if($int !== "0" && $int != null){
                         $flag = true;
                         if(strpos($value, "cr") !== false){
-                            $features[] = "CrimeRate";
+                            $features[] = "Crime";
                         }else if(strpos($value, "pop") !== false){
-                            $features[] = "PopulationDensity";
+                            $features[] = "Population";
                         }else if(strpos($value, "pr") !== false){
-                            $features[] = "Price";
+                            $features[] = "House (buy)";
                         }
                     }
                 }
@@ -255,7 +251,7 @@
                             <div class='counter-item' style='height: 400px;'>
                                 <i class='fa fa-cloud-upload'></i>
                                 <ul>
-                                    <li><h3 style='margin-top:10px;'>Top 5 recommended Suburbs</h3><p>(Based on the given weight of featrues)</p></li>
+                                    <li><h3 style='margin-top:10px;'>Top 5 Recommended Suburbs</h3><p>(Based on the given weight of featrues)</p></li>
 
                                     <li class='rating'>
 
@@ -277,7 +273,7 @@
 
                 $text = "";
                 foreach ($features as $value){
-                    if ($value == "CrimeRate"){
+                    if ($value == "Crime"){
                         echo "
                         <div class='col-xs-12 col-sm-3 col-md-3 wow fadeInUp'>
                             <div class='counter-item' style='height: 400px;'>
@@ -288,7 +284,7 @@
                             </div>
                         </div>";
                     }else{
-                        if($value == "PopulationDensity"){
+                        if($value == "Population"){
                             echo "
                         <div class='col-xs-12 col-sm-3 col-md-3 wow fadeInUp' data-wow-duration='2s' data-wow-delay='300ms'>
                             <div class='counter-item' style='height: 400px;'>
@@ -299,7 +295,7 @@
                             </div>
                         </div>";
                         }else{
-                            if($value == "Price"){
+                            if($value == "House (buy)"){
                                 echo "
                                 <div class='col-xs-12 col-sm-3 col-md-3 wow fadeInUp' data-wow-duration='2s' data-wow-delay='300ms'>
                                     <div class='counter-item' style='height: 400px;'>
@@ -340,9 +336,9 @@
                                 //echo $int;
                                 if($int !== "0"){
                                     if(strpos($value, "cr") !== false){
-                                        $features[] = "CrimeRate";
+                                        $features[] = "Crime Rate";
                                     }else if(strpos($value, "pop") !== false){
-                                        $features[] = "PopulationDensity";
+                                        $features[] = "Population Density";
                                     }else if(strpos($value, "pr") !== false){
                                         $features[] = "Price";
                                     }
@@ -356,7 +352,6 @@
                                 $count = 0;
                                 foreach ($features as $value){
                                     $count++;
-                                    //echo "<script type='text/javascript'>alert('$count');</script>";
                                     if($count == 1){
                                         echo"<a  class='list-group-item active' id='ds1'><p style='font-size:20px';><center>". $value ."</center></p></a>";
                                     }else{
@@ -366,7 +361,7 @@
                                 echo"</div></div>
                                     <!--chart col-->
                                     <div class='col-md-10'>
-                                            <div id='chart' style='width:100%;height:400px;'></div>
+                                            <div class='diagram' id='chart' style='width:100%;height:400px;'></div>
                                     </div>
                                     ";
                                     
@@ -404,11 +399,9 @@
                 </li>
                 <li class="footer-contact">
                   <i class="fa fa-envelope"></i>
-                  <a href="#">atar15@student.monash.edu</a>
+                  <a href="#">neighbourgood.nirvana@gmail.com</a>
                 </li>
-                <li class="footer-contact">
-                  <i class="fa fa-phone"></i>0470 060 868
-                </li>
+               
 
               </ul>
             </div>
@@ -470,7 +463,7 @@
       <!-- /.container -->
     </div>
     <!-- End CCopyright Section -->
-
+    <!-- save retrieved data but not show -->
     <div id="test" style="display:none;"></div>
   </body>
 </html>

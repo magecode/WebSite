@@ -73,6 +73,6 @@ if ($result->num_rows > 0){
 $pBuy  = $pBuy . "#";
 
 
-echo $crimeRate . $popDensity. $pBuy;
+echo  $popDensity. $crimeRate. $pBuy;
 $conn->close();
 ?>

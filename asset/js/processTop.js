@@ -22,6 +22,7 @@ for (i = 1; i < parameters.length; i++) {
 }
 
 var sum = Number(crRange) + Number(popRange) + Number(prRange);
+//var sum = 1;
 var prWeight = prRange / sum;
 var popWeight = popRange / sum;
 var crWeight = crRange / sum;

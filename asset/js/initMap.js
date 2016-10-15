@@ -13,7 +13,9 @@ function initialize() {
 
     //filter and initialise parameters
     loc = parameters[0].replace("suburb=", "").replace("+", " ");
-    		
+    if (loc == "") {
+        loc = "Melbourne";
+    }
     //get facilities parameters
     var count = 0;
     for (i = 0; i < parameters.length; i++) {
@@ -25,7 +27,11 @@ function initialize() {
     }
 			
     //retrieve geographic parameters from google api
-    var targetLoc = loc.replace(/%2C/g,",").replace(/\+/g," ");
+    var targetLoc = loc.replace(/%2C/g, ",").replace(/\+/g, " ");
+    var isNum = /^\d+$/.test(targetLoc);
+    if (isNum == true) {
+        targetLoc = "Victoria, " + targetLoc ;
+    }
 
     var geocoder = new google.maps.Geocoder();
     geocoder.geocode({ 'address': targetLoc }, function (results, status) {
@@ -48,11 +54,45 @@ function initialize() {
             //show alert info when cannot find suburb
             if (flag_hasSuburb == false) {
                 alert("Sorry, we cannot locate to a suitable suburb.");
+                window.open("../../index.html", "_self");
             }
 
+            //retrieve fusiontable suburbs list
+            var fusionTableList = "";
+
+            var file = "../info/suburbs.txt";
+            var rawFile = new XMLHttpRequest();
+            rawFile.open("GET", file, false);
+            rawFile.onreadystatechange = function () {
+                if (rawFile.readyState === 4) {
+                    if (rawFile.status === 200 || rawFile.status == 0) {
+                        var allText = rawFile.responseText;
+                        fusionTableList = allText;
+                    }
+                }
+            }
+            rawFile.send(null);
+
+            var arrayFusionList = fusionTableList.match(/[^\r\n]+/g);
+
+            //validate if input is within fusiontable suburbs list
+            var fusiontableFlage = false;
+            for (var i = 0; i <= arrayFusionList.length-1; i++) {
+                //var matchResult = arrayFusionList[i].match(new RegExp(targetLoc, "i"));
+                if (arrayFusionList[i].toUpperCase() == targetLoc.toUpperCase()) {
+                    fusiontableFlage = true;
+                }
+            }
+
+            if (fusiontableFlage != true) {
+                alert("Sorry, we have problem with drawing suburbs boundary. Please choose suburbs from search pull-down list.");
+                window.open("../../index.html", "_self");
+            }
+
+
             var strictBounds = new google.maps.LatLngBounds(
-                    new google.maps.LatLng(-38.462537, 143.796459),
-                    new google.maps.LatLng(-37.438928, 145.924813)
+                    new google.maps.LatLng(-38.404306, 143.989873),
+                    new google.maps.LatLng(-37.324942, 146.032990)
                 );
             var targetCenter = new google.maps.LatLng(lat, lng);
             if (strictBounds.contains(targetCenter)) {
@@ -68,10 +108,11 @@ function initialize() {
                 });
             } else {
                 alert("Please only input location within Melbourne.");
+                window.open("../../index.html", "_self");
             }
         } else {
-            alert("Please check your input, it should be either a suburb name or a post code.");
-            //document.getElementById("googleMap").innerhtml = "Geocode was not successful for the following reason:";
+            alert("Please check your input, it should be either a suburb name or a post code (in English).");
+            window.open("../../index.html", "_self");
         }			
     });
 		
@@ -89,7 +130,7 @@ function initMap(lat,lng,targetLoc) {
         draggable: true,
         scrollwheel: false,
         clickable: false,
-        mapTypeId:google.maps.MapTypeId.HYBRID
+        mapTypeId:google.maps.MapTypeId.ROADMAP
     };
 		
     //locate drawing position
@@ -122,7 +163,7 @@ function initMap(lat,lng,targetLoc) {
                 fillColor: '#000000',
                 fillOpacity: 0.4
             }
-        },{
+        }, {
             where: "'Suburb Name' =" + "'" + targetLoc + "'",
             polygonOptions: {
                 strokeColor: '#000000' ,
@@ -133,7 +174,7 @@ function initMap(lat,lng,targetLoc) {
             }
         }]
     });
-	  
+
     //draw map
     layer.setMap(map);
 }
@@ -146,6 +187,7 @@ function callback(results, status) {
     }
 }
 
+//create facilities icon on result map
 function createMarker(place) {
     var icons = {
         school: {
@@ -175,6 +217,7 @@ function createMarker(place) {
 function capitalizeFirstLetter(string) {
     return string.charAt(0).toUpperCase() + string.slice(1);
 }
+
 		
 //run function when load current page
 google.maps.event.addDomListener(window, 'load', initialize)

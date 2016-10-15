@@ -22,9 +22,6 @@
     <!-- Responsive Metatag -->
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 
-    <!-- Page Description and Author -->
-    <meta name="description" content="Sulfur - Responsive HTML5 Template">
-    <meta name="author" content="Shahriyar Ahmed">
 
     <!-- Bootstrap CSS  -->
     <link rel="stylesheet" href="asset/bootstrap/css/bootstrap.min.css" type="text/css">
@@ -52,7 +49,7 @@
 
     <script src="asset/js/modernizrr.js"></script>
 
-    <script type="text/javascript" src="http://maps.googleapis.com/maps/api/js?key=AIzaSyCcvtV_71ZGFAUUcS9_u_D1ZFHi2BWLjao&signed_in=true&libraries=places"></script>
+    <script type="text/javascript" src="http://maps.googleapis.com/maps/api/js?key=AIzaSyCcvtV_71ZGFAUUcS9_u_D1ZFHi2BWLjao&language=en-AU&region=AU&signed_in=true&libraries=places"></script>
     <script type="text/javascript" src="asset/js/validation.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
 
@@ -65,8 +62,6 @@
         });
     </script>
 
-
-
     <script>
         //this function is used for auto fullfill search box
         function autoCompleteSearch() {
@@ -75,7 +70,7 @@
 					new google.maps.LatLng(-37.620642, 145.612040)
 					);
 
-            var input = /** @type {!HTMLInputElement} */(
+            var input = (
 					document.getElementById('suburb'));
 
             var options = {
@@ -84,24 +79,169 @@
 
             var autocomplete = new google.maps.places.Autocomplete(input, options);
         }
-
-        //google.maps.event.addDomListener(window, 'load', autoCompleteSearch);
     </script>
 
     <script>
         function fillSearch(obj) {
             var text = document.getElementById(obj.id).innerHTML
             document.getElementById("suburb").value = text + ", Victoria, Australia";
+            document.forms[0].submit();
         }
     </script>
 
     <style>
-       
-   
+        @media all { /* screen size until 1200px */
+            body {
+                font-size: 1.5em; /* 1.5x default size */
+            }
+
+            .img-td {
+                width: 64px;
+                background-color: black;
+            }
+
+            .attributeTable th:first-child, .attributeTable td:first-child {
+                width: 70px;
+            }
+
+            #searchBtn {
+                width: 30%;
+                line-height: 38px;
+                float: right;
+            }
+
+            .btn-find-ss {
+                margin-left: 2px;
+            }
+
+            .fsRow {
+                width: 90%;
+                margin: auto;
+            }
+        }
+
+        @media all and (max-width: 1200px) { /* screen size until 1200px */
+            body {
+                font-size: 1.5em; /* 1.5x default size */
+            }
+
+            .img-td {
+                width: 64px;
+                background-color: black;
+            }
+
+            .attributeTable th:first-child, .attributeTable td:first-child {
+                width: 70px;
+            }
+        }
+
+        @media all and (max-width: 1000px) { /* screen size until 1000px */
+            .attributeTable {
+                font-size: 1.2em; /* 1.2x default size */
+            }
+
+            .img-td {
+                width: 32px;
+                background-color: black;
+            }
+
+            .attributeTable th:first-child, .attributeTable td:first-child {
+                width: 36px;
+            }
+
+            #searchBtn {
+                width: 100%;
+                line-height: 38px;
+                float: right;
+            }
+        }
+
+        @media all and (max-width: 768px) {
+            .btn-find-ss {
+                margin-left: 0px;
+            }
+
+            .fsRow {
+                width: 100%;
+                margin: auto;
+            }
+
+            .findSuburb {
+                padding: 1px !important;
+                margin: 1px !important;
+            }
+
+            .container {
+                padding: 1px !important;
+            }
+
+            .ui-tabs .ui-tabs-panel {
+                padding: 1px !important;
+            }
+        }
+
+        @media all and (max-width: 500px) { /* screen size until 500px */
+            .headerUl {
+                font-size: 1em !important;
+            }
+
+            h1 {
+                font-size: 1.5em !important;
+            }
+
+            .attributeTable {
+                font-size: .8em; /* 1.2x default size */
+            }
+
+            .img-td {
+                width: 16px;
+                background-color: black;
+            }
+
+            .attributeTable th:first-child, .attributeTable td:first-child {
+                width: 20px;
+            }
+
+            .searchTable {
+                width: 100%;
+            }
+        }
+
+        @media all and (max-width: 300px) { /* screen size until 500px */
+            .headerUl {
+                font-size: .6em !important;
+            }
+        }
+
+        .vertical-center {
+            margin-top: 126.5px;
+        }
+
+        .fullLine {
+            display: block;
+            width: 85%;
+            text-align: left;
+            margin: auto;
+        }
+
+        #tabs {
+            background-color: rgba(1,1,1,.5);
+            border: none;
+        }
+
+            #tabs div, #tabs ul {
+                background-color: transparent;
+                border: none;
+            }
+
+        #prSlider, #crSlider, #popSlider {
+            background-color: aliceblue !important;
+            margin: 0 15px 0 15px;
+        }
+
         th {
             text-align: center;
-            font-size: 24px;
-            color: lightseagreen;
+            color: cyan;
             padding: 6px 2px 2px 6px;
             width: 100%;
         }
@@ -117,27 +257,16 @@
             width: 500px;
         }
 
-        .img-td {
-            width: 64px;
-            background-color: black;
-        }
-
-        .slider-table input[type=range] {
-            width: 150px;
-        }
-
         input[type="checkbox"] {
             width: 18px;
             height: 18px;
         }
 
-        .text-td td {
-            font-size: 20px;
-        }
 
         .attributeTable {
-            width: 78%;
-            table-layout: auto;
+            width: 100%;
+            border-collapse: collapse;
+            table-layout: fixed;
         }
 
             .attributeTable tr th, td {
@@ -145,12 +274,27 @@
             }
 
         .t2 tr:nth-child(2) td:first-child {
-            padding-top: 30px;
+            padding-top: 50px;
         }
 
         .t2 tr td:nth-child(2) {
             vertical-align: bottom;
         }
+
+        .checkbox label {
+            color: white;
+        }
+
+        .searchTable {
+            width: 90%;
+            padding: 0px;
+            margin: 0px;
+        }
+
+            .searchTable div {
+                padding: 0px;
+                margin: 0px;
+            }
     </style>
 
 
@@ -224,8 +368,8 @@
         <!-- End Header Logo & Naviagtion -->
 
     </header>
-
-
+    
+    <input type="hidden" id="searchType" value="sbs" />
     <!-- Start Header Section -->
     <div class="banner">
         <div class="overlay">
@@ -233,85 +377,95 @@
                 <div class="intro-text">
                     <h1>Welcome To <span>Neighbourgood</span></h1>
                     <p>We find the best liveable place for you <br>in MELBOURNE</p>
-                    <h5>( You can prioritize the environmental features below )</h5>
+                  
                     <form name="input" action="/asset/php/result.php" method="get" onsubmit="return validateForm(this)">
-                        <div align="center">
-                            <table style="width: 60%">
-                                <tr>
-                                    <td>
+                        <div id="tabs">
+                            <ul class="headerUl">
+                                <li><a id="sbs" class="" href="#searchBySub">Search By Location</a></li>
+                                <li><a id="fs" href="#findSuburb">Your Priorities to Find Top 5</a></li>
+                            </ul>
 
-                                        <input style="color:black; width: 100%" class="search-override" type="text" size="60" name="suburb" id="suburb" placeholder="Please enter an address, suburb or post code" onclick="autoCompleteSearch()">
-
-                                    </td>
-                                    <td>
-                                        <input class="page-scroll btn btn-primary" type="submit" id="sub" value="Find!">
-                                    </td>
-                                </tr>
-                            </table>
-                        </div>
-
-                        <div class="row" style="width:60%;margin: auto">
-                            <br />
-
-                            <div class="col-sm-8" style="overflow:hidden; min-width:426px">
-                                <table class="slider-table text-td attributeTable">
-                                    <tr>
-                                        <th></th>
-                                        <th>Enviormental Features</th>
-                                        <th>Your Priority</th>
-                                        <th></th>
-                                    </tr>
-                                    <tr style='color:white;'>
-                                        <td style="text-align:right"><img style="cursor:help" class="img-td" src="asset/images/population.png" alt="This feature shows the population density in the target suburb"></td>
-                                        <td>Popuation Density</td>
-                                        <td id="slider-table"><input type="range" name="popRange" min="0" max="3" value="2" step="1" onchange="showValue1(this.value)" /></td>
-                                        <td><span id="range1">2</span></td>
-
-
-                                    </tr>
-                                    <tr style='color:white;'>
-                                        <td style="text-align:right"><img style="cursor:help" class="img-td" src="asset/images/crime.PNG" alt="This feature shows number of commited crimes and status of crime in the target suburb"></td>
-                                        <td>Crime Rate</td>
-                                        <td id="slider-table"><input type="range" name="crRange" min="0" max="3" value="2" step="1" onchange="showValue2(this.value)" />
-                                        <td><span id="range2">2</span></td>
-
-
-                                    </tr>
-                                    <tr style='color:white;'>
-                                        <td style="text-align:right"><img style="cursor:help" class="img-td" src="asset/images/price.GIF" alt="This feature shows the median cost of buying a house or Unit in the target suburb"></td>
-                                        <td>Housing Cost</td>
-                                        <td id="slider-table"><input type="range" name="prRange" min="0" max="3" value="2" step="1" onchange="showValue3(this.value)" />
-                                        <td><span id="range3">2</span></td>
-                                    </tr>
-
-
-
-                                </table>
+                            <div >
+                                <br /><br /><p style="color:deepskyblue; font-size: 20px">Search for a specific location with an <span style="color: white">Address</span> , <span style="color: white">Suburb Name</span>  or  <span style="color: white">Postcode</span> 
+                                to observe the <span style="color:burlywood">Crime Rate</span>, <span style="color:burlywood">Population Density</span> and the Median for <span style="color:burlywood">Buying a House</span> in Your Target place</p>
                             </div>
-                            <div class="col-sm-4">
-                                <table class="slider-table text-td attributeTable t2">
-                                    <tr>
-                                        <th>Facility Nearby</th>
-                                        <th></th>
-                                    </tr>
-                                    <tr style='color:white;'>
-                                        <td>Nearby Schools</td>
-                                        <td align="left"><input type="checkbox" name="facilities" value="school"> </td>
+                            <input type="hidden" id="slectedCity" />
+
+                            <div id="searchBySub" style="height:396px;max-height: 396px;min-height: 396px;">
+
+                                <div class="vertical-center" align="center">
+                                    <div class="searchTable">
+                                        <div class="col-sm-9">
+                                            <input style="color:black; width: 100%" class="search-override" type="text" size="60" name="suburb" id="suburb" placeholder="Please enter an address, suburb or post code" onclick="autoCompleteSearch()">
+
+                                        </div>
+                                        <div class="col-sm-3">
+                                            <input class="btn btn-success btn-find-ss" style="width:100%;line-height: 37px" type="button" onclick="validateAddress()" value="Find!">
+                                            <input style="display: none" type="submit" id="sub" value="Find!">
+                                        </div>
+                                    </div>
+
+                                    <br style="clear:both" />
+                                    <div class="checkbox">
+                                        <label class="checkbox-inline">Show facilities:  </label>
+                                        <label class="checkbox-inline"><input type="checkbox" name="facilities" value="school" checked>Nearby schools</label>
+                                        <label class="checkbox-inline"><input type="checkbox" name="facilities" value="park" checked>Nearby parks</label>
+                                        <label class="checkbox-inline"><input type="checkbox" name="facilities" value="hospital" checked>Nearby Hospitals</label>
+                                    </div>
+                                </div>
+                            </div>
+                            <div id="findSuburb" style="height:396px;max-height: 396px;min-height: 396px;">
+
+                                <div class="row fsRow">
+                                    <br />
 
 
-                                    </tr>
-                                    <tr style='color:white;'>
-                                        <td>Nearby Parks</td>
-                                        <td align="left"><input type="checkbox" name="facilities" value="park"></td>
+                                    <div style="overflow:hidden; ">
+
+                                        <table class="slider-table text-td attributeTable" style="background-color: rgba(0,0,0,0.4);">
+                                            <tr>
+                                                <th></th>
+                                                <th>Environmental Features</th>
+                                                <th>Your Priority</th>
+                                                <th></th>
+                                            </tr>
+                                            <tr style='color:white;'>
+                                                <td style="text-align:right"><img style="cursor:help" class="img-td" src="asset/images/population.png" alt="Increasing the priority for this feature will help you to find the less crowded suburbs. Just relax and enjoy quiet living place. "></td>
+                                                <td>Popuation Density</td>
+                                                <td id="slider-table"> <div id="popSlider"></div></td>
+                                                <td><label id="popText"></label></td>
 
 
-                                    </tr>
-                                    <tr style='color:white;'>
-                                        <td>Nearby Hospitals</td>
-                                        <td align="left"><input type="checkbox" name="facilities" value="hospital"></td>
-                                    </tr>
+                                            </tr>
+                                            <tr style='color:white;'>
+                                                <td style="text-align:right"><img style="cursor:help" class="img-td" src="asset/images/crime.PNG" alt="The number of commited crimes might be your concern to choose a place to live. So, incease this 
+                                                                                   to find the most safest suburbs."></td>
+                                                <td>Crime Rate</td>
+                                                <td> <div id="crSlider"></div></td>
+                                                <td><label id="crText"></label></td>
+                                            </tr>
+                                            <tr style='color:white;'>
+                                                <td style="text-align:right"><img style="cursor:help" class="img-td" src="asset/images/price.GIF" alt="This feature shows the median cost of BUYING a house or Unit in the target suburb"></td>
+                                                <td>Housing Cost</td>
+                                                <td>
 
-                                </table>
+                                                    <div id="prSlider"></div>
+                                                </td>
+                                                <td><label id="prText"></label></td>
+                                            </tr>
+
+
+
+                                        </table>
+										<input type="hidden" id="popRange" name="popRange" />
+                                        <input type="hidden" id="crRange" name="crRange" />
+                                        <input type="hidden" id="prRange" name="prRange" />
+
+                                    </div>
+                                    <br />
+
+                                    <br style="clear: both" />
+                                </div>
                             </div>
                         </div>
                     </form>
@@ -650,7 +804,7 @@
     <script src="asset/js/lightbox.min.js"></script>
     <script src="asset/js/count-to.js"></script>
     <script src="asset/js/styleswitcher.js"></script>
-    <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+    <link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
     <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
     <!--img zoom-->
     <script src="asset/js/jquery.elevateZoom-3.0.8.min.js"> </script>
@@ -658,7 +812,6 @@
     <!--img zoom-->
 
     <script src="asset/js/map.js"></script>
-    <!--<script src="http://maps.googleapis.com/maps/api/js?sensor=false"></script>-->
     <script src="asset/js/script.js"></script>
 
     <script type="text/javascript">
@@ -674,9 +827,87 @@
     </script>
 
     <script>
+        function resposiveWindow() {
+            var windowWidth = $(window).width(); //retrieve current window width
+            var windowHeight = $(window).height(); //retrieve current window height
+            if (windowWidth < 564) {
+                $(".checkbox").css("width", "100%");
+                $(".checkbox label").removeClass("checkbox-inline");
+                $(".checkbox label").addClass("fullLine");
 
+            } else {
+
+                if (windowWidth < 1000) {
+                    $(".checkbox").css("width", "auto");
+                    $(".checkbox label").removeClass("fullLine");
+                    $(".checkbox label").addClass("checkbox-inline");
+                } else {
+                    $(".checkbox").css("width", "auto");
+                    $(".checkbox label").removeClass("fullLine");
+                    $(".checkbox label").addClass("checkbox-inline");
+                }
+
+            }
+        }
+        var rangeValues =
+                {
+                    "1": "Not Importnant",
+                    "2": "Average",
+                    "3": "Very Important"
+                };
+
+        function refreshSlider() {
+
+            var pr = $("#prSlider").slider("value");
+            var cr = $("#crSlider").slider("value");
+            var pop = $("#popSlider").slider("value");
+            $("#prRange").val(pr);
+            $("#crRange").val(cr);
+            $("#popRange").val(pop);
+            $("#prText").text(rangeValues[pr])
+            $("#crText").text(rangeValues[cr]);
+            $("#popText").text(rangeValues[pop]);
+        }
         $(document).ready(function () {
 
+
+            $('#suburb').bind('keypress', function (e) {
+                if (e.keyCode == 13) {
+                    event.preventDefault();    
+                    validateAddress();
+                    return false;
+                }
+            });
+
+            if ($(window).width() > 500) {
+                $("#zoom_04b").elevateZoom({
+                    scrollZoom: true,
+                    gallery: "gallery_09",
+                    galleryActiveClass: "active", zoomWindowPosition: 3, zoomWindowOffetx: 15
+                });
+            }
+            $(window).resize(function () {
+                resposiveWindow();
+            });
+            resposiveWindow();
+            $("#tabs").tabs();
+            $("#prSlider, #crSlider, #popSlider").slider({
+                orientation: "horizontal",
+                range: "min",
+                min: 1,
+                max: 3,
+                value: 1,
+                step: 1,
+                slide: refreshSlider,
+                change: refreshSlider
+            });
+            refreshSlider();
+            $("#fs").click(function () {
+                $("#searchType").val("fs");
+            });
+            $("#sbs").click(function () {
+                $("#searchType").val("sbs");
+            });
             $(".flickr-widget img").click(function (event) {
                
                 var title = $(this).attr("src");
@@ -684,14 +915,14 @@
                 var smallTitle = title.replace("-L.jpg", "-S.jpg");
                 smallTitle = smallTitle.replace("-L.JPG", "-S.jpg");
                 smallTitle = smallTitle.replace("Large", "small");
-                ez.swaptheimage(smallTitle, title);
+                if (ez == null) {
+                    $('#zoom_04b').attr("src", title);
+                }
+                else
+                    ez.swaptheimage(smallTitle, title);
 
             });
-            $("#zoom_04b").elevateZoom({
-                scrollZoom: true,
-                gallery: "gallery_09",
-                galleryActiveClass: "active", zoomWindowPosition: 3, zoomWindowOffetx: 15
-            });
+
 
 
             $("#select").change(function (e) {
@@ -739,8 +970,11 @@
 
 
                 var ez = $('#zoom_04b').data('elevateZoom');
-
-                ez.swaptheimage(smallImage, largeImage);
+                if (ez == null) {
+                    $('#zoom_04b').attr("src", largeImage);
+                }
+                else
+                    ez.swaptheimage(smallImage, largeImage);
 
             });
             

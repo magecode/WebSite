@@ -15,16 +15,16 @@ if ($conn -> connect_error) {
 }
 //generate top5 list
 
-$prWeight = $_GET['prWeight'];
-$crWeight = $_GET['crWeight'];
-$popWeight = $_GET['popWeight'];
+$prWeight = $_GET['prWeight'] * 100;
+$crWeight = $_GET['crWeight'] * 100;
+$popWeight = $_GET['popWeight'] * 100;
 
 $sql_cr = "
     SELECT DISTINCT a.suburb, b.lvl, c.lvl, d.lvl, ((b.lvl*'$prWeight') + (c.lvl*'$popWeight') + (d.lvl*'$crWeight')) as score
     FROM melbmap a, housebuy b, popdensity c, crimemap d
     WHERE a.suburb = b.suburb AND b.suburb = c.suburb AND d.postcode = a.postcode
     AND b.year = c.year AND c.year = d.year AND d.year = 2015
-    ORDER BY ((b.lvl*0.5)  + (c.lvl*0.3) + (d.lvl*0.2)) DESC";
+    ORDER BY ((b.lvl*'$prWeight')  + (c.lvl*'$popWeight') + (d.lvl*'$crWeight')) DESC";
 
 $result = $conn->query($sql_cr);
 $suburbs = [];

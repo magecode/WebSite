@@ -36,24 +36,24 @@ function retrieveDetail() {
                 if (details[i].match(/cr/g) != null) {
                     var crimes = details[i].split(",");
                     var rate = lvToWord(crimes[2], "crime");
-                    var text = "Crime Figure: " + crimes[1] + "<br>"
-                                + "Level: " + rate;
+                    var text = "<table><tr><td>Figure:</td><td>" + crimes[1] + " reports</td></tr>"
+                                + "<tr><td>Level:</td><td>" + rate + "</td></tr></table>";
                     document.getElementById("crDetail").innerHTML = text;
                     drawStars("crStars", crimes[2]);
                 } else if (details[i].match(/pop/g) != null) {
                     var populations = details[i].split(",");
                     var rate = lvToWord(populations[4], "population");
-                    var text = "Population Figure: " + populations[1] + "<br>"
-                                + "Geographic Area: " + populations[2] + "<br>"
-                                + "Population Density: " + populations[3] + "<br>"
-                                + "Level: " + rate;
+                    var text = "<table><tr><td>Figure:</td><td>" + populations[1] + "</td></tr>"
+                                + "<tr><td>Geo Area:</td><td>" + populations[2] + " km<sup>2</sup></td></tr>"
+                                + "<tr><td>Density:</td><td>" + populations[3] + " ppl/" + "km<sup>2</sup></td></tr>"
+                                + "<tr><td>Level:</td><td>" + rate + "</td></tr></table>";
                     document.getElementById("popDetail").innerHTML = text;
                     drawStars("popStars", populations[4]);
                 } else if (details[i].match(/pr/g) != null) {
                     var prices = details[i].split(",");
                     var rate = lvToWord(prices[2], "price");
-                    var text = "Average House Price: $" + prices[1] + "<br>"
-                                + "Level: " + rate;
+                    var text = "<table><tr><td>Average:</td><td>$" + prices[1] + "</td></tr>"
+                                + "<tr><td>Level:</td><td>" + rate + "</td></tr></table>";
                     document.getElementById("prDetail").innerHTML = text;
                     drawStars("prStars", prices[2]);
                 }
@@ -88,20 +88,20 @@ function validateResult() {
 function lvToWord(lv, feature) {
     var text = "";
     if (feature == "crime") {
-        text1 = "high";
-        text2 = "elevated";
-        text3 = "guarded";
-        text4 = "very safe";
+        text1 = "High";
+        text2 = "Elevated";
+        text3 = "Guarded";
+        text4 = "Very safe";
     } else if (feature == "price") {
-        text1 = "expensive";
-        text2 = "acceptable";
-        text3 = "moderate";
-        text4 = "cheap";
+        text1 = "Expensive";
+        text2 = "Acceptable";
+        text3 = "Moderate";
+        text4 = "Cheap";
     } else if (feature == "population") {
-        text1 = "very few people";
-        text2 = "moderate";
-        text3 = "crowded";
-        text4 = "populated";
+        text4 = "Few people";
+        text3 = "Moderate";
+        text2 = "Crowded";
+        text1 = "Populated";
     }
 
     switch(lv){

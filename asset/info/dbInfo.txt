@@ -1,1 +1,1 @@
-118.139.18.135;admin;admin;ngdb
+10.0.0.4;admin;admin;ngdb

@@ -1,6 +1,4 @@
-﻿$(document).ready(function () {
-    //initMap();
-    
+﻿$(document).ready(function () {   
     var selectedChart = "line";
     var selectedDataSet = "ds1";
 
@@ -51,6 +49,9 @@ function drawChart(selectedChart, selectedDataSet, chart)
     //since gecoder is asynchronise function, do following step within its code body
     var loc = "";
     loc = parameters[0].replace("suburb=", "").replace("+", " ");
+    if (loc == "") {
+        loc = "Melbourne";
+    }
 
     //retrieve geographic parameters from google api
     var targetLoc = loc.replace(/%2C/g, ",").replace(/\+/g, " ");
